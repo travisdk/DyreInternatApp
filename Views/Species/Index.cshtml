@@ -1,0 +1,14 @@
+﻿@model List<Species>
+
+
+<h3>Dyrearter</h3>
+<ul class="list-group">
+@foreach (var species in Model)
+{
+    <li class="list-group-item">
+        @species.SpeciesName
+    </li>
+
+ }
+</ul>
+<a class="btn btn-primary" asp-action="Create" asp-controller="Species">Tilføj ny</a>
