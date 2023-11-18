@@ -6,7 +6,7 @@ namespace DyreInternatApp.Models
     {
         public int RaceId { get; set; }
         [Required]
-        [Display(Name ="Race navn")]
+        [Display(Name ="Racenavn")]
         [StringLength(50)]
         public string RaceName { get; set; }
         public int SpeciesId { get; set; }

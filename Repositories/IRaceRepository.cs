@@ -7,5 +7,7 @@ namespace DyreInternatApp.Repositories
         void AddRace(Race newRace);
         List<Race> GetAll();
 
+        Race? GetRaceById(int? id);
+        void Update(Race race);
     }
 }
