@@ -7,6 +7,7 @@ namespace DyreInternatApp.Models
     {
         public int RaceId { get; set; }
 
+        [MaxLength(50)]
         public string RaceName { get; set; }
         public int SpeciesId { get; set; }
 

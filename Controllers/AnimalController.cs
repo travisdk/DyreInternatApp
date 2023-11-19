@@ -28,8 +28,11 @@ namespace DyreInternatApp.Controllers
         // GET: Animals
         public IActionResult Index()
         {
-            var allAnimals = _animalRepository.GetAll();
-            return View(allAnimals);
+            List<Animal> allAnimals = _animalRepository.GetAll();
+            var animalsVM = _mapper.Map<List<AnimalVM>>(allAnimals);
+
+ 
+            return View(animalsVM);
         }
 
         // GET: Animals/Details/5

@@ -8,7 +8,7 @@ namespace DyreInternatApp.Models
 
         [Required]
         [Display(Name="Dyreart")]
-        [StringLength(50)]
+        [MaxLength(50)]
         public string SpeciesName { get; set;}
 
     }

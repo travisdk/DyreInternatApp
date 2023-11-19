@@ -10,6 +10,7 @@ namespace DyreInternatApp.Models.Helpers
             CreateMap<RaceVM, Race>();
             CreateMap<Animal, AnimalVM>();
             CreateMap<AnimalVM, Animal>();
+
         }
     }
 }

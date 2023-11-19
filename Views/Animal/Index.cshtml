@@ -1,4 +1,4 @@
-﻿@model IEnumerable<DyreInternatApp.Models.Animal>
+﻿@model IEnumerable<DyreInternatApp.Models.ViewModels.AnimalVM>
 
 @{
     ViewData["Title"] = "Index";
@@ -21,22 +21,8 @@
             <th>
                 @Html.DisplayNameFor(model => model.IsVaccinated)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.TagCode)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.DateOfBirth)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Weight)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Notes)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Race)
-            </th>
             <th></th>
+
         </tr>
     </thead>
     <tbody>
@@ -51,21 +37,7 @@
             <td>
                 @Html.DisplayFor(modelItem => item.IsVaccinated)
             </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TagCode)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DateOfBirth)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Weight)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Notes)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Race.RaceName)
-            </td>
+
             <td>
                 <a asp-action="Edit" asp-route-id="@item.AnimalId">Edit</a> |
                 <a asp-action="Details" asp-route-id="@item.AnimalId">Details</a> |

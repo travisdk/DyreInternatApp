@@ -4,6 +4,7 @@ using DyreInternatApp.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DyreInternatApp.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231119141356_MaxLengthAdded")]
+    partial class MaxLengthAdded
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -155,56 +158,6 @@ namespace DyreInternatApp.Migrations
                     b.HasIndex("SpeciesId");
 
                     b.ToTable("Races");
-
-                    b.HasData(
-                        new
-                        {
-                            RaceId = 1,
-                            RaceName = "Bichon Havanais",
-                            SpeciesId = 1
-                        },
-                        new
-                        {
-                            RaceId = 2,
-                            RaceName = "Irsk Setter",
-                            SpeciesId = 1
-                        },
-                        new
-                        {
-                            RaceId = 3,
-                            RaceName = "Gravhund",
-                            SpeciesId = 1
-                        },
-                        new
-                        {
-                            RaceId = 4,
-                            RaceName = "Labrador",
-                            SpeciesId = 1
-                        },
-                        new
-                        {
-                            RaceId = 5,
-                            RaceName = "Ragdoll",
-                            SpeciesId = 2
-                        },
-                        new
-                        {
-                            RaceId = 6,
-                            RaceName = "Perser",
-                            SpeciesId = 2
-                        },
-                        new
-                        {
-                            RaceId = 7,
-                            RaceName = "Cornish Rex",
-                            SpeciesId = 2
-                        },
-                        new
-                        {
-                            RaceId = 8,
-                            RaceName = "Tyrkisk Angora",
-                            SpeciesId = 2
-                        });
                 });
 
             modelBuilder.Entity("DyreInternatApp.Models.Species", b =>
@@ -223,28 +176,6 @@ namespace DyreInternatApp.Migrations
                     b.HasKey("SpeciesId");
 
                     b.ToTable("Species");
-
-                    b.HasData(
-                        new
-                        {
-                            SpeciesId = 1,
-                            SpeciesName = "Hund"
-                        },
-                        new
-                        {
-                            SpeciesId = 2,
-                            SpeciesName = "Kat"
-                        },
-                        new
-                        {
-                            SpeciesId = 3,
-                            SpeciesName = "Gnaver"
-                        },
-                        new
-                        {
-                            SpeciesId = 4,
-                            SpeciesName = "Fugl"
-                        });
                 });
 
             modelBuilder.Entity("DyreInternatApp.Models.Animal", b =>

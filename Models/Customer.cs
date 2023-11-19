@@ -5,17 +5,18 @@ namespace DyreInternatApp.Models
     public class Customer
     {
         public int CustomerId { get; set; }
-        [Required]
+        [MaxLength(50)]
         public string FirstName { get; set; }
-        [Required]
+        [MaxLength(50)]
         public string LastName { get; set; }
-        [Required]
+        [MaxLength(50)]
         public string Address { get; set; }
-        [Required]
+        [MaxLength(30)]
         public string City { get; set; }
-        [Required]
+        [MaxLength(20)]
         public string PostalCode { get; set; }
-        [Required]
+        [MaxLength(20)]
+
         public string Phone { get; set; }       
 
         public List<Order> Orders { get; set; } = new List<Order>();

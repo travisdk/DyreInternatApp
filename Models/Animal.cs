@@ -6,6 +6,7 @@ namespace DyreInternatApp.Models
     {
         public int AnimalId { get; set; }
 
+        [MaxLength(50)]
         public string AnimalName { get; set;}
    
         public int RaceId { get; set; }
@@ -13,15 +14,18 @@ namespace DyreInternatApp.Models
         public decimal Price { get; set;}
 
         public bool IsVaccinated { get; set;}
+       
         
-   
+        [MaxLength(20)]        
         public string? TagCode { get; set;}
  
         public DateTime? DateOfBirth { get; set;}
 
         public int Weight { get; set;}  // KG
-  
-        public string? Notes { get; set;}   
+
+        [MaxLength(3000)]
+        public string? Notes { get; set;}
+
 
         public Race Race { get; set;}
 

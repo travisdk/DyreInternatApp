@@ -5,6 +5,7 @@ namespace DyreInternatApp.Models.ViewModels
 {
     public class AnimalVM
     {
+        public int AnimalId { get; set; }
         [Required]
         [Display(Name = "Navn")]
         public string AnimalName { get; set; }
