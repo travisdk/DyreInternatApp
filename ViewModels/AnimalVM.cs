@@ -1,7 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc.Rendering;
+﻿using DyreInternatApp.Models;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System.ComponentModel.DataAnnotations;
 
-namespace DyreInternatApp.Models.ViewModels
+namespace DyreInternatApp.ViewModels
 {
     public class AnimalVM
     {
@@ -10,8 +11,8 @@ namespace DyreInternatApp.Models.ViewModels
         [Display(Name = "Navn")]
         public string AnimalName { get; set; }
         [Required]
-        [Display(Name ="Art og Race")]
         public int RaceId { get; set; }
+
         [Display(Name = "Pris DKK")]
         public decimal Price { get; set; }
         [Display(Name = "Vaccineret?")]
@@ -26,8 +27,11 @@ namespace DyreInternatApp.Models.ViewModels
         [Display(Name = "Beskrivelse")]
         public string? Notes { get; set; }
 
+        public Race? Race { get; set; }
 
         // non-model helpers
         public IEnumerable<SelectListItem>? RaceList { get; set; }
+
+
     }
 }

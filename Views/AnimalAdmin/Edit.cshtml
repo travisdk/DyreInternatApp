@@ -1,4 +1,4 @@
-﻿@model DyreInternatApp.Models.Animal
+﻿@model AnimalVM
 
 @{
     ViewData["Title"] = "Edit";
@@ -20,7 +20,11 @@
             </div>
             <div class="form-group">
                 <label asp-for="RaceId" class="control-label"></label>
-                <select asp-for="RaceId" class="form-control" asp-items="ViewBag.RaceId"></select>
+                <select asp-for="RaceId" class="form-control" asp-items="@Model.RaceList">
+                    
+                    <option value="">Vælg Art & Race</option>
+                    
+                </select>
                 <span asp-validation-for="RaceId" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -61,7 +65,7 @@
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index">Tilbage</a>
 </div>
 
 @section Scripts {

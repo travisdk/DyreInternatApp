@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using DyreInternatApp.Models;
-using DyreInternatApp.Models.ViewModels;
 using DyreInternatApp.Repositories;
+using DyreInternatApp.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.CodeAnalysis.CSharp.Syntax;

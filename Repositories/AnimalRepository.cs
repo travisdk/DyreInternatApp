@@ -1,4 +1,5 @@
 ﻿using DyreInternatApp.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace DyreInternatApp.Repositories
 {
@@ -18,12 +19,13 @@ namespace DyreInternatApp.Repositories
 
         public List<Animal>? GetAll()
         {
-            return _appDbContext.Animals?.ToList();
+            return _appDbContext.Animals.Include(animal => animal.Race).ThenInclude(race => race.Species).ToList();
         }
 
         public Animal? GetAnimalById(int? id)
         {
-           return _appDbContext.Animals.FirstOrDefault(animal => animal.AnimalId == id);    
+           return _appDbContext.Animals.Include(animal => animal.Race).ThenInclude(race => race.Species)
+                .FirstOrDefault(animal => animal.AnimalId == id);    
         }
 
         public void RemoveById(int id)

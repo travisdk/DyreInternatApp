@@ -8,9 +8,9 @@ namespace DyreInternatApp.Models
         public int RaceId { get; set; }
 
         [MaxLength(50)]
+        [Display(Name ="RaceNavn")]
         public string RaceName { get; set; }
         public int SpeciesId { get; set; }
-
         public Species Species { get; set; }
 
     }

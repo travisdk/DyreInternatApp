@@ -7,9 +7,10 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using DyreInternatApp.Models;
 using DyreInternatApp.Repositories;
-using DyreInternatApp.Models.ViewModels;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
+using DyreInternatApp.ViewModels;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace DyreInternatApp.Controllers
 {
@@ -85,58 +86,54 @@ namespace DyreInternatApp.Controllers
             return View(animalVM);
         }
 
-        //// GET: Animals/Edit/5
-        //public async Task<IActionResult> Edit(int? id)
-        //{
-        //    if (id == null || _context.Animals == null)
-        //    {
-        //        return NotFound();
-        //    }
+        // GET: Animals/Edit/5
+        public IActionResult Edit(int? id)
+        {
+            if (id == null || _animalRepository.GetAll().Any() == false)
+            {
+                return NotFound();
+            }
+            var animal = _animalRepository.GetAnimalById(id);
+            if (animal == null)
+            {
+                return NotFound();
+            }
+            var animalVM = _mapper.Map<AnimalVM>(animal);
+            var allAnimalTypes = _raceRepository.GetAll().Select(s => new
+            {
+                RaceId = s.RaceId,
+                Description = $"{s.Species.SpeciesName} / {s.RaceName}"
+            }).ToList();
 
-        //    var animal = await _context.Animals.FindAsync(id);
-        //    if (animal == null)
-        //    {
-        //        return NotFound();
-        //    }
-        //    ViewData["RaceId"] = new SelectList(_context.Races, "RaceId", "RaceName", animal.RaceId);
-        //    return View(animal);
-        //}
+            var selList = new SelectList(allAnimalTypes, "RaceId", "Description");
+            animalVM.RaceList = selList;
+            return View(animalVM);
+        }
 
-        //// POST: Animals/Edit/5
-        //// To protect from overposting attacks, enable the specific properties you want to bind to.
-        //// For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public async Task<IActionResult> Edit(int id, [Bind("AnimalId,AnimalName,RaceId,Price,IsVaccinated,TagCode,DateOfBirth,Weight,Notes")] Animal animal)
-        //{
-        //    if (id != animal.AnimalId)
-        //    {
-        //        return NotFound();
-        //    }
+        [HttpPost]
+        [ValidateAntiForgeryToken] 
 
-        //    if (ModelState.IsValid)
-        //    {
-        //        try
-        //        {
-        //            _context.Update(animal);
-        //            await _context.SaveChangesAsync();
-        //        }
-        //        catch (DbUpdateConcurrencyException)
-        //        {
-        //            if (!AnimalExists(animal.AnimalId))
-        //            {
-        //                return NotFound();
-        //            }
-        //            else
-        //            {
-        //                throw;
-        //            }
-        //        }
-        //        return RedirectToAction(nameof(Index));
-        //    }
-        //    ViewData["RaceId"] = new SelectList(_context.Races, "RaceId", "RaceName", animal.RaceId);
-        //    return View(animal);
-        //}
+        // missing ID check + Concurrency stuff normally found here...
+        public IActionResult Edit([Bind("AnimalId,AnimalName,RaceId,Price,IsVaccinated,TagCode,DateOfBirth,Weight,Notes")] AnimalVM animalVM)
+        {
+            if (ModelState.IsValid)
+            {
+
+                var animal = _mapper.Map<Animal>(animalVM);
+                _animalRepository.Update(animal);
+                return RedirectToAction("Index");
+            }
+
+            var allAnimalTypes = _raceRepository.GetAll().Select(s => new
+            {
+                RaceId = s.RaceId,
+                Description = $"{s.Species.SpeciesName} / {s.RaceName}"
+            }).ToList();
+
+            var selList = new SelectList(allAnimalTypes, "RaceId", "Description");
+            animalVM.RaceList = selList;
+            return View(animalVM);
+        }
 
         //// GET: Animals/Delete/5
         //public async Task<IActionResult> Delete(int? id)
@@ -176,9 +173,9 @@ namespace DyreInternatApp.Controllers
         //    return RedirectToAction(nameof(Index));
         //}
 
-        //private bool AnimalExists(int id)
-        //{
-        //  return (_context.Animals?.Any(e => e.AnimalId == id)).GetValueOrDefault();
-        //}
+        private bool AnimalExists(int id)
+        {
+            return (_animalRepository.GetAll()?.Any(e => e.AnimalId == id)).GetValueOrDefault();
+        }
     }
 }

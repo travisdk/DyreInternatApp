@@ -1,5 +1,6 @@
-﻿using DyreInternatApp.Models.ViewModels;
-using AutoMapper;
+﻿using AutoMapper;
+using DyreInternatApp.ViewModels;
+
 namespace DyreInternatApp.Models.Helpers
 {
     public class MappingProfiles : Profile

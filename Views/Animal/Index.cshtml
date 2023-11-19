@@ -6,9 +6,7 @@
 
 <h1>Index</h1>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
+
 @if (Model != null && Model.Count() > 0)
 {
     <table class="table">
@@ -16,12 +14,9 @@
             <tr>
                 <th>
                     @Html.DisplayNameFor(model => model.AnimalName)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Race.Species.SpeciesName)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Race.RaceName)
+                </th
+               <th>
+                    @Html.DisplayNameFor(model => model.Notes)
                 </th>
                 <th>
                     @Html.DisplayNameFor(model => model.Price)
@@ -29,7 +24,6 @@
                 <th>
                     @Html.DisplayNameFor(model => model.IsVaccinated)
                 </th>
-                <th></th>
 
             </tr>
         </thead>
@@ -41,10 +35,7 @@
                         @Html.DisplayFor(modelItem => item.AnimalName)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.Race.Species.SpeciesName)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Race.RaceName)
+                        @Html.DisplayFor(modelItem => item.Notes)
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.Price)
@@ -53,15 +44,15 @@
                         @Html.DisplayFor(modelItem => item.IsVaccinated)
                     </td>
 
-                    <td>
-                        <a asp-action="Edit" asp-route-id="@item.AnimalId">Edit</a> |
-                        <a asp-action="Details" asp-route-id="@item.AnimalId">Details</a> |
-                        <a asp-action="Delete" asp-route-id="@item.AnimalId">Delete</a>
-                    </td>
+                    
                 </tr>
             }
         </tbody>
     </table>
 
 
+}
+else
+{
+    <h4 class="text-warning">Vi har p.t. ikke nogen dyr der mangler et hjem! - Kig tilbage på et senere tidspunkt.</h4>
 }
