@@ -8,7 +8,8 @@ namespace DyreInternatApp.Models.Helpers
         {
             CreateMap<Race, RaceVM>();
             CreateMap<RaceVM, Race>();
-
+            CreateMap<Animal, AnimalVM>();
+            CreateMap<AnimalVM, Animal>();
         }
     }
 }
