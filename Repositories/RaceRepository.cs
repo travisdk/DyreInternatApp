@@ -20,7 +20,6 @@ namespace DyreInternatApp.Repositories
         public List<Race> GetAll()
         {
             return _appDbContext.Races.Include(r => r.Species).OrderBy(r => r.Species.SpeciesName).ThenBy(r=>r.RaceName).ToList();    
-            
         }
 
         public Race? GetRaceById(int? id)

@@ -64,9 +64,11 @@ namespace DyreInternatApp.Controllers
             {
                 return NotFound();
             }
-            ViewData["SID"] = new SelectList(_speciesRepository.GetAll(), "SpeciesId", "SpeciesName", race.SpeciesId);
 
             var raceVM = _mapper.Map<RaceVM>(race);
+            ViewData["SID"] = new SelectList(_speciesRepository.GetAll(), "SpeciesId", "SpeciesName", raceVM.SpeciesId);
+
+   
             return View(raceVM);
         }
 
@@ -81,6 +83,7 @@ namespace DyreInternatApp.Controllers
                 _raceRepository.Update(race);
                 return RedirectToAction("Index");
             }
+            ViewData["SID"] = new SelectList(_speciesRepository.GetAll(), "SpeciesId", "SpeciesName", raceVM.SpeciesId);
 
             return View(raceVM);  
 

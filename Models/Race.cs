@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Mvc.ModelBinding;
+using System.ComponentModel.DataAnnotations;
 
 namespace DyreInternatApp.Models
 {
@@ -12,6 +13,7 @@ namespace DyreInternatApp.Models
         public int SpeciesId { get; set; }
 
         [Display(Name = "Dyreart")]
+        [BindNever]
         public Species Species { get; set; }
 
     }
