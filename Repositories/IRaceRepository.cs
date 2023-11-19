@@ -9,5 +9,7 @@ namespace DyreInternatApp.Repositories
 
         Race? GetRaceById(int? id);
         void Update(Race race);
+
+        void RemoveById(int id); 
     }
 }

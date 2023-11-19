@@ -11,5 +11,7 @@ namespace DyreInternatApp.Models.ViewModels
         public int SpeciesId { get; set; }
 
 
+        public IEnumerable<SelectListItem>? SpeciesList { get; set; }
+
     }
 }

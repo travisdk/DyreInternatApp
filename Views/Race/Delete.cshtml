@@ -1,0 +1,33 @@
+﻿@model DyreInternatApp.Models.Race
+
+@{
+    ViewData["Title"] = "Slet";
+}
+
+<h1>Slet</h1>
+
+<h3>Er du sikker?</h3>
+<div>
+    <h4>Race</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.RaceName)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.RaceName)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Species)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Species.SpeciesName)
+        </dd>
+    </dl>
+    
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="RaceId" />
+        <input type="submit" value="Slet" class="btn btn-danger" /> |
+        <a asp-action="Index">Tilbage</a>
+    </form>
+</div>

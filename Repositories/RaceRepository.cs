@@ -27,6 +27,13 @@ namespace DyreInternatApp.Repositories
             return _appDbContext.Races.Include(r => r.Species).FirstOrDefault(r => r.RaceId == id); 
         }
 
+        public void RemoveById(int id)
+        {
+            var race = GetRaceById(id);
+            _appDbContext.Races.Remove(race);
+            _appDbContext.SaveChanges();
+        }
+
         public void Update(Race race)
         {
             _appDbContext.Races.Update(race);

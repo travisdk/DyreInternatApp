@@ -16,7 +16,10 @@
 
             <div class="form-group">
                 <label asp-for="SpeciesId" class="control-label"></label>
-                <select asp-for="SpeciesId" class="form-control" asp-items="ViewBag.SID"></select>
+                <select asp-for="SpeciesId" class="form-control" asp-items="@Model.SpeciesList">
+
+                    <option value="">Vælg dyreart</option>
+                </select>
                 <span asp-validation-for="SpeciesId" class="text-danger"></span>
             </div>
 

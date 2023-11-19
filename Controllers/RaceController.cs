@@ -4,6 +4,7 @@ using DyreInternatApp.Models.ViewModels;
 using DyreInternatApp.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
 
@@ -29,9 +30,12 @@ namespace DyreInternatApp.Controllers
 
 
         public IActionResult Create()
+
         {
-            ViewData["SID"] = new SelectList(_speciesRepository.GetAll(), "SpeciesId", "SpeciesName");
-            return View();
+            RaceVM raceVM = new RaceVM();
+            var selList = new SelectList(_speciesRepository.GetAll(), "SpeciesId", "SpeciesName");
+            raceVM.SpeciesList = selList;
+            return View(raceVM);
         }
 
         [HttpPost]
@@ -45,7 +49,9 @@ namespace DyreInternatApp.Controllers
                 _raceRepository.AddRace(newRace);
                 return RedirectToAction("Index");
             }
-            ViewData["SID"] = new SelectList(_speciesRepository.GetAll(), "SpeciesId", "SpeciesName", newRaceVM.SpeciesId);
+
+            var selList = new SelectList(_speciesRepository.GetAll(), "SpeciesId", "SpeciesName", newRaceVM.SpeciesId);
+            newRaceVM.SpeciesList = selList;
             return View(newRaceVM);
 
         }
@@ -66,27 +72,50 @@ namespace DyreInternatApp.Controllers
             }
 
             var raceVM = _mapper.Map<RaceVM>(race);
-            ViewData["SID"] = new SelectList(_speciesRepository.GetAll(), "SpeciesId", "SpeciesName", raceVM.SpeciesId);
+            var selList = new SelectList(_speciesRepository.GetAll(), "SpeciesId", "SpeciesName");
+            raceVM.SpeciesList = selList;
 
-   
+
             return View(raceVM);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit([Bind("RaceId, RaceName, SpeciesId")]RaceVM raceVM)
+        public IActionResult Edit([Bind("RaceId, RaceName, SpeciesId")] RaceVM raceVM)
         {
 
-            if (ModelState.IsValid )
+            if (ModelState.IsValid)
             {
                 var race = _mapper.Map<Race>(raceVM);
                 _raceRepository.Update(race);
                 return RedirectToAction("Index");
             }
-            ViewData["SID"] = new SelectList(_speciesRepository.GetAll(), "SpeciesId", "SpeciesName", raceVM.SpeciesId);
-
-            return View(raceVM);  
+            var selList = new SelectList(_speciesRepository.GetAll(), "SpeciesId", "SpeciesName", raceVM.SpeciesId);
+            raceVM.SpeciesList = selList;
+            return View(raceVM);
 
         }
+
+        public IActionResult Delete(int? id)
+        {
+            var race = _raceRepository.GetRaceById(id);
+            if (race == null)
+            {
+                return NotFound();
+            }
+
+            return View(race);
+        }
+
+
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteConfirmed(int id)
+        {
+            _raceRepository.RemoveById(id);
+            return RedirectToAction(nameof(Index));
+        }
     }
+
+
 }
