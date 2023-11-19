@@ -10,13 +10,13 @@ using System.Diagnostics;
 
 namespace DyreInternatApp.Controllers
 {
-    public class RaceController : Controller
+    public class RaceAdminController : Controller
     {
         private IRaceRepository _raceRepository;
         private readonly ISpeciesRepository _speciesRepository;
         private readonly IMapper _mapper;
 
-        public RaceController(IRaceRepository raceRepository, ISpeciesRepository speciesRepository, IMapper mapper)
+        public RaceAdminController(IRaceRepository raceRepository, ISpeciesRepository speciesRepository, IMapper mapper)
         {
             _raceRepository = raceRepository;
             _speciesRepository = speciesRepository;

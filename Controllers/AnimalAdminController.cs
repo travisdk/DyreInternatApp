@@ -9,16 +9,20 @@ using DyreInternatApp.Models;
 using DyreInternatApp.Repositories;
 using DyreInternatApp.Models.ViewModels;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 
 namespace DyreInternatApp.Controllers
 {
-    public class AnimalController : Controller
+
+
+    [Authorize]
+    public class AnimalAdminController : Controller
     {
         private readonly IAnimalRepository _animalRepository;
         private readonly IRaceRepository _raceRepository;
         private readonly IMapper _mapper;
-
-        public AnimalController(IAnimalRepository animalRepository, IRaceRepository raceRepository, IMapper mapper)
+       
+        public AnimalAdminController(IAnimalRepository animalRepository, IRaceRepository raceRepository, IMapper mapper)
         {
             _animalRepository = animalRepository;
             _raceRepository = raceRepository;
@@ -26,9 +30,13 @@ namespace DyreInternatApp.Controllers
         }
 
         // GET: Animals
+
+
         public IActionResult Index()
         {
             List<Animal> allAnimals = _animalRepository.GetAll();
+            if (allAnimals.Count == 0)
+                return View();
             var animalsVM = _mapper.Map<List<AnimalVM>>(allAnimals);
 
  
@@ -48,7 +56,6 @@ namespace DyreInternatApp.Controllers
             return View(animal);
         }
 
- 
         public IActionResult Create()
         {
             AnimalVM animalVM = new AnimalVM();
@@ -66,7 +73,7 @@ namespace DyreInternatApp.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("AnimalName,RaceId,Price,IsVaccinated,TagCode,DateOfBirth,Weight,Notes")] AnimalVM animalVM)
+        public  IActionResult Create([Bind("AnimalName,RaceId,Price,IsVaccinated,TagCode,DateOfBirth,Weight,Notes")] AnimalVM animalVM)
         {
             if (ModelState.IsValid)
             {

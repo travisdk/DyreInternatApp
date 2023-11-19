@@ -4,10 +4,10 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace DyreInternatApp.Controllers
 {
-    public class SpeciesController : Controller
+    public class SpeciesAdminController : Controller
     {
         private ISpeciesRepository _speciesRepository;  
-        public SpeciesController(ISpeciesRepository speciesRepository)
+        public SpeciesAdminController(ISpeciesRepository speciesRepository)
         {
             _speciesRepository = speciesRepository;
         }

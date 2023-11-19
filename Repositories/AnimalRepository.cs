@@ -16,9 +16,9 @@ namespace DyreInternatApp.Repositories
             _appDbContext.SaveChanges();
         }
 
-        public List<Animal> GetAll()
+        public List<Animal>? GetAll()
         {
-            return _appDbContext.Animals.ToList();
+            return _appDbContext.Animals?.ToList();
         }
 
         public Animal? GetAnimalById(int? id)
