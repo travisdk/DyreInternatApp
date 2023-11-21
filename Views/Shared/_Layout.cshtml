@@ -1,5 +1,5 @@
 ﻿@using Microsoft.AspNetCore.Identity
-@inject UserManager<IdentityUser> userManager
+@inject UserManager<ApplicationUser> userManager
 
 
 
@@ -28,7 +28,10 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Animal" asp-action="Index">Vores Dyr</a>
                         </li>
-                        @if (userManager.GetUserId(User) != null)
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="ShoppingCart" asp-action="Index">Kurv</a>
+                        </li>
+                        @if (User.IsInRole("Admin"))
                         {
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="SpeciesAdmin" asp-action="Index">Dyrearter</a>

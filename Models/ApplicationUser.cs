@@ -1,23 +1,22 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Identity;
+using System.ComponentModel.DataAnnotations;
 
 namespace DyreInternatApp.Models
 {
-    public class Customer
+    public class ApplicationUser : IdentityUser
     {
-        public int CustomerId { get; set; }
         [MaxLength(50)]
         public string FirstName { get; set; }
         [MaxLength(50)]
         public string LastName { get; set; }
-        [MaxLength(50)]
-        public string Address { get; set; }
         [MaxLength(30)]
+        public string Address { get; set; }
+        [MaxLength(20)]
         public string City { get; set; }
-        [MaxLength(20)]
+        [MaxLength(10)]
         public string PostalCode { get; set; }
-        [MaxLength(20)]
+      
 
-        public string Phone { get; set; }       
 
         public List<Order> Orders { get; set; } = new List<Order>();
 

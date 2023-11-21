@@ -1,0 +1,16 @@
+﻿@model ShoppingCartViewModel
+
+<h3>Kurv</h3>
+
+
+@if (Model.ShoppingCart.ShoppingCartItems.Count() == 0)
+{
+    <div class="alert alert-warning"><h4>Din kurv er tom!</h4></div>
+}
+else
+{
+    foreach (var shoppingCartItem in Model.ShoppingCart.ShoppingCartItems)
+    {
+        <li>@shoppingCartItem.Animal.AnimalName</li>
+    }
+}

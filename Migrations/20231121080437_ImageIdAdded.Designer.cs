@@ -4,6 +4,7 @@ using DyreInternatApp.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DyreInternatApp.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231121080437_ImageIdAdded")]
+    partial class ImageIdAdded
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -349,14 +352,14 @@ namespace DyreInternatApp.Migrations
                         new
                         {
                             Id = "a227247c-5650-4b39-b1ad-83f0db7292e2",
-                            ConcurrencyStamp = "435b1b58-75e1-4c0a-85da-7df00426bac6",
+                            ConcurrencyStamp = "cf44bde3-7239-447a-bc17-d872142412a8",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
                             Id = "de450d59-55f6-4bbf-9d3b-2425b46bb861",
-                            ConcurrencyStamp = "f26ea5cd-e31f-4bbf-8b7e-c78075b7abf3",
+                            ConcurrencyStamp = "cb79f1ea-e595-468e-9a88-5df6a75642cb",
                             Name = "Customer",
                             NormalizedName = "CUSTOMER"
                         });

@@ -4,6 +4,7 @@ using DyreInternatApp.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DyreInternatApp.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231120190728_ShoppingCartItemsAdded")]
+    partial class ShoppingCartItemsAdded
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -37,9 +40,6 @@ namespace DyreInternatApp.Migrations
 
                     b.Property<DateTime?>("DateOfBirth")
                         .HasColumnType("datetime2");
-
-                    b.Property<string>("ImageId")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("IsVaccinated")
                         .HasColumnType("bit");
@@ -348,15 +348,15 @@ namespace DyreInternatApp.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "a227247c-5650-4b39-b1ad-83f0db7292e2",
-                            ConcurrencyStamp = "435b1b58-75e1-4c0a-85da-7df00426bac6",
+                            Id = "c0a5af48-ebc2-492d-be11-3e739e55bfb4",
+                            ConcurrencyStamp = "c0c87616-694e-4439-bdf2-cc3eea1d3fdd",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "de450d59-55f6-4bbf-9d3b-2425b46bb861",
-                            ConcurrencyStamp = "f26ea5cd-e31f-4bbf-8b7e-c78075b7abf3",
+                            Id = "d60c8477-1890-4311-adcf-7a7da061ac15",
+                            ConcurrencyStamp = "ff76f67a-a3ec-48c7-a455-1cb126e6d17d",
                             Name = "Customer",
                             NormalizedName = "CUSTOMER"
                         });

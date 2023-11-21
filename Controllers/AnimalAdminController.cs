@@ -74,12 +74,22 @@ namespace DyreInternatApp.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public  IActionResult Create([Bind("AnimalName,RaceId,Price,IsVaccinated,TagCode,DateOfBirth,Weight,Notes")] AnimalVM animalVM)
+        public async Task<IActionResult> Create([Bind("AnimalName,RaceId,Price,IsVaccinated,TagCode,DateOfBirth,Weight,Notes, ImageId, ImageFile")] AnimalVM animalVM)
         {
             if (ModelState.IsValid)
             {
                 var animal = _mapper.Map<Animal>(animalVM);
+
+                if (animalVM.ImageFile != null)
+                {
+
+                    animal.ImageId = await _animalRepository.AddAnimalImageFile(animalVM.ImageFile, animalVM.AnimalName);
+
+                    if (animal.ImageId == null) { throw new("Error writing animal photo file to disk");  }
+                  
+                }
                 _animalRepository.AddAnimal(animal);
+
                 return RedirectToAction(nameof(Index));
             }
    
@@ -114,7 +124,7 @@ namespace DyreInternatApp.Controllers
         [ValidateAntiForgeryToken] 
 
         // missing ID check + Concurrency stuff normally found here...
-        public IActionResult Edit([Bind("AnimalId,AnimalName,RaceId,Price,IsVaccinated,TagCode,DateOfBirth,Weight,Notes")] AnimalVM animalVM)
+        public IActionResult Edit([Bind("AnimalId,AnimalName,RaceId,Price,IsVaccinated,TagCode,DateOfBirth,Weight,Notes,ImageId")] AnimalVM animalVM)
         {
             if (ModelState.IsValid)
             {

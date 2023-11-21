@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.IdentityModel.Tokens;
+using System.ComponentModel.DataAnnotations;
 
 namespace DyreInternatApp.Models
 {
@@ -8,11 +9,11 @@ namespace DyreInternatApp.Models
         public int OrderId { get; set; }
 
         [Required]
-        public int CustomerId { get; set; } 
+        public string CustomerId { get; set; } 
         public List<Animal> Animals { get; set; } = new List<Animal>();
 
         [Required]
         public DateTime OrderDate { get; set; }
-        public Customer Customer { get; set; }
+        public ApplicationUser Customer { get; set; }
     }
 }

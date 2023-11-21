@@ -4,6 +4,7 @@ using DyreInternatApp.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DyreInternatApp.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231120144456_moreidentity")]
+    partial class moreidentity
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -37,9 +40,6 @@ namespace DyreInternatApp.Migrations
 
                     b.Property<DateTime?>("DateOfBirth")
                         .HasColumnType("datetime2");
-
-                    b.Property<string>("ImageId")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("IsVaccinated")
                         .HasColumnType("bit");
@@ -258,27 +258,6 @@ namespace DyreInternatApp.Migrations
                         });
                 });
 
-            modelBuilder.Entity("DyreInternatApp.Models.ShoppingCartItem", b =>
-                {
-                    b.Property<int>("ShoppingCartItemId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ShoppingCartItemId"));
-
-                    b.Property<int>("AnimalId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("ShoppingCartId")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("ShoppingCartItemId");
-
-                    b.HasIndex("AnimalId");
-
-                    b.ToTable("ShoppingCartItems");
-                });
-
             modelBuilder.Entity("DyreInternatApp.Models.Species", b =>
                 {
                     b.Property<int>("SpeciesId")
@@ -348,15 +327,15 @@ namespace DyreInternatApp.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "a227247c-5650-4b39-b1ad-83f0db7292e2",
-                            ConcurrencyStamp = "435b1b58-75e1-4c0a-85da-7df00426bac6",
+                            Id = "909f3578-1645-4749-8998-b8a09e14e2a0",
+                            ConcurrencyStamp = "e0c1c3c1-eebb-4b0e-8abd-cdf146e8020d",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "de450d59-55f6-4bbf-9d3b-2425b46bb861",
-                            ConcurrencyStamp = "f26ea5cd-e31f-4bbf-8b7e-c78075b7abf3",
+                            Id = "1df1653e-389c-4815-80f0-a4f1e206f094",
+                            ConcurrencyStamp = "19495d28-8f11-426b-8d8a-72501b85552c",
                             Name = "Customer",
                             NormalizedName = "CUSTOMER"
                         });
@@ -507,17 +486,6 @@ namespace DyreInternatApp.Migrations
                         .IsRequired();
 
                     b.Navigation("Species");
-                });
-
-            modelBuilder.Entity("DyreInternatApp.Models.ShoppingCartItem", b =>
-                {
-                    b.HasOne("DyreInternatApp.Models.Animal", "Animal")
-                        .WithMany()
-                        .HasForeignKey("AnimalId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Animal");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

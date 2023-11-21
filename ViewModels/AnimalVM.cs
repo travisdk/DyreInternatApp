@@ -1,4 +1,5 @@
 ﻿using DyreInternatApp.Models;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.ComponentModel.DataAnnotations;
 
@@ -27,11 +28,14 @@ namespace DyreInternatApp.ViewModels
         [Display(Name = "Beskrivelse")]
         public string? Notes { get; set; }
 
+        [HiddenInput]
+        public string? ImageId { get; set; }
+
         public Race? Race { get; set; }
 
         // non-model helpers
         public IEnumerable<SelectListItem>? RaceList { get; set; }
 
-
+        public IFormFile? ImageFile { get; set; }
     }
 }

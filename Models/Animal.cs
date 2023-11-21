@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Mvc;
+using System.ComponentModel.DataAnnotations;
 
 namespace DyreInternatApp.Models
 {
@@ -24,6 +25,9 @@ namespace DyreInternatApp.Models
 
         [MaxLength(3000)]
         public string? Notes { get; set;}
+
+        [HiddenInput]
+        public string? ImageId { get; set;}  
 
         public Race Race { get; set;}
 

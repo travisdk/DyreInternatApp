@@ -13,5 +13,6 @@ namespace DyreInternatApp.Repositories
         void Update(Animal animal);
 
         void RemoveById(int id);
+        Task<string> AddAnimalImageFile(IFormFile? imageFile, string animalName);
     }
 }

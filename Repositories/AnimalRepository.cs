@@ -6,15 +6,28 @@ namespace DyreInternatApp.Repositories
     public class AnimalRepository : IAnimalRepository
     {
         private readonly AppDbContext _appDbContext;
+        private readonly IWebHostEnvironment _webHostEnvironment;
 
-        public AnimalRepository(AppDbContext appDbContext)
+        public AnimalRepository(AppDbContext appDbContext, IWebHostEnvironment webHostEnvironment)
         {
             _appDbContext = appDbContext;
+            _webHostEnvironment = webHostEnvironment;
         }
         public void AddAnimal(Animal newAnimal)
         {
             _appDbContext.Animals.Add(newAnimal);
             _appDbContext.SaveChanges();
+        }
+
+        public async Task<string> AddAnimalImageFile(IFormFile? imageFile, string animalName)
+        {
+            var fileName = animalName + "_" +Guid.NewGuid().ToString() + @".jpg"; // CONVERTER HERE !!
+            var path = Path.Combine( _webHostEnvironment.WebRootPath, @"img\animals\", fileName); 
+            using (var stream = System.IO.File.Create(path))
+            {
+                await imageFile.CopyToAsync(stream);
+            }
+            return fileName; 
         }
 
         public List<Animal>? GetAll()
