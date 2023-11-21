@@ -85,42 +85,9 @@
     <script>
         $(document).ready(function () {
 
-
             $("#clearimage").click(function () {
-                console.log("CLICK");
                 $("#imagecontainer").attr("src", "");
                 $("#ImageFile").val(null);
-                // if ($("#PatientId").val() == null) return false;
-                // $("#AppointmentTime").removeAttr("disabled");
-
-                // var data = {
-                //     gpId: $("#GPId").val(),
-                //     patientId: $("#PatientId").val()
-                // };
-
-                // $.ajax({
-                //     type: "GET",
-                //     url: "/Appointments/GetAvailableTimes",
-                //     contentType: "application/json; charset=utf-8",
-                //     data: data,
-                //     dataType: "json",
-                //     success: function (result) {
-                //         // we have new availabletimes ready
-                //         var availTimesSelectList = $("#AppointmentTime");
-
-                //         availTimesSelectList.empty(); // drop existing items
-                //         availTimesSelectList.append($("<option/>", { value: "", text: "- Vælg ledig tid -" }));
-
-                //         // append newly found date/times
-                //         $.each(result, function (idx, tid) {
-                //             availTimesSelectList.append($("<option/>", { value: tid, text: tid.replace("T", " ") }));
-                //         })
-                //     },
-                //     error: function (error) {
-                //         console.log(error);
-                //     }
-                // });
-
             });
         });
     </script>
