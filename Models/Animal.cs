@@ -25,9 +25,9 @@ namespace DyreInternatApp.Models
 
         [MaxLength(3000)]
         public string? Notes { get; set;}
-
+      
         [HiddenInput]
-        public string? ImageId { get; set;}  
+        public string? ImageFileName { get; set; }
 
         public Race Race { get; set;}
 

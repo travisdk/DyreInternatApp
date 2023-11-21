@@ -83,9 +83,9 @@ namespace DyreInternatApp.Controllers
                 if (animalVM.ImageFile != null)
                 {
 
-                    animal.ImageId = await _animalRepository.AddAnimalImageFile(animalVM.ImageFile, animalVM.AnimalName);
+                    animal.ImageFileName = await _animalRepository.AddAnimalImageFile(animalVM.ImageFile, animalVM.AnimalName);
 
-                    if (animal.ImageId == null) { throw new("Error writing animal photo file to disk");  }
+                    if (animal.ImageFileName == null) { throw new("Error writing animal photo file to disk");  }
                   
                 }
                 _animalRepository.AddAnimal(animal);

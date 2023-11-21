@@ -1,5 +1,6 @@
 ﻿using DyreInternatApp.Models;
 using Microsoft.EntityFrameworkCore;
+using System.Security.Policy;
 
 namespace DyreInternatApp.Repositories
 {
@@ -22,11 +23,12 @@ namespace DyreInternatApp.Repositories
         public async Task<string> AddAnimalImageFile(IFormFile? imageFile, string animalName)
         {
             var fileName = animalName + "_" +Guid.NewGuid().ToString() + @".jpg"; // CONVERTER HERE !!
-            var path = Path.Combine( _webHostEnvironment.WebRootPath, @"img\animals\", fileName); 
-            using (var stream = System.IO.File.Create(path))
+            var physicalPath = Path.Combine(_webHostEnvironment.WebRootPath, @"img\animals\", fileName);
+            using (var stream = System.IO.File.Create(physicalPath))
             {
                 await imageFile.CopyToAsync(stream);
             }
+       
             return fileName; 
         }
 

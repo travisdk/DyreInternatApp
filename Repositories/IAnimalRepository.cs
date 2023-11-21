@@ -3,8 +3,6 @@
 namespace DyreInternatApp.Repositories
 {
     public interface IAnimalRepository 
-
-
     {
         void AddAnimal(Animal newAnimal);
         List<Animal> GetAll();

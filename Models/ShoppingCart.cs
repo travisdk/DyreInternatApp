@@ -15,7 +15,7 @@ namespace DyreInternatApp.Models
 
         public static ShoppingCart GetCart(IServiceProvider services)
         {
-            ISession? session = services.GetService<HttpContextAccessor>()?.HttpContext?.Session;
+            ISession? session = services.GetService<IHttpContextAccessor>()?.HttpContext?.Session;
             AppDbContext appDbContext = services.GetService<AppDbContext>() ?? throw new Exception("Error initializing");
             string cartId = session?.GetString("CartId") ?? Guid.NewGuid().ToString();
             session?.SetString("CartId", cartId);
@@ -37,7 +37,7 @@ namespace DyreInternatApp.Models
                 {
 
                     Animal = animal,
-                    ShoppingCartId = ShoppingCartId,
+                    ShoppingCartId = this.ShoppingCartId,
                 };
                 _appDbContext.ShoppingCartItems.Add(shoppingCartItem);
                 _appDbContext.SaveChanges();
@@ -53,8 +53,10 @@ namespace DyreInternatApp.Models
 
         public List<ShoppingCartItem> GetShoppingCartItems()
         {
-            return ShoppingCartItems ??= _appDbContext.ShoppingCartItems.Where(s=>s.ShoppingCartId  == ShoppingCartId).
-                 Include(s => s.Animal).ToList();   
+
+      
+            return ShoppingCartItems ??= _appDbContext.ShoppingCartItems.Include(sci => sci.Animal).Where(s=>s.ShoppingCartId  == ShoppingCartId)
+              .ToList();   
         }
 
         public decimal GetShoppingCartTotal()

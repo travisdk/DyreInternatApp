@@ -16,14 +16,18 @@
            @foreach (var animal in @Model) {
                 <div class="col">
                     <div class="card">
-                        @if (@animal.ImageId != null)
+                        @if (@animal.ImageFileName != null)
                         {
-                            <img class="card-img" src="~/img/animals/@animal.ImageId">
+                            <img class="card-img" src="~/img/animals/@animal.ImageFileName" />
                         }
                         <div class="card-body">
                        <h4 class="card-title">@animal.AnimalName</h4>
+                       <h5 class="card-subtitle">@animal.Race.RaceName</h5>
                        <p class="card-text">@animal.Notes</p>
-                            <p class="card-subtitle">Pris:  DKK @animal.Price inkl.moms</p>
+                       <p class="text-black-50">Pris:  DKK @animal.Price inkl.moms</p>
+                       <p class="card-text text-secondary">Vaccineret: @(animal.IsVaccinated ? "Ja":"Nej")</p>
+                       <a class="btn btn-success" asp-controller="ShoppingCart" asp-action="AddToShoppingCart" asp-route-animalid="@animal.AnimalId">+ Tilføj</a>
+                      
                    </div>
                </div>
            </div>

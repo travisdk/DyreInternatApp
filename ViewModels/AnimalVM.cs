@@ -29,7 +29,7 @@ namespace DyreInternatApp.ViewModels
         public string? Notes { get; set; }
 
         [HiddenInput]
-        public string? ImageId { get; set; }
+        public string? ImageFileName { get; set; }
 
         public Race? Race { get; set; }
 
@@ -37,5 +37,7 @@ namespace DyreInternatApp.ViewModels
         public IEnumerable<SelectListItem>? RaceList { get; set; }
 
         public IFormFile? ImageFile { get; set; }
+
+       
     }
 }

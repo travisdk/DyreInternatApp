@@ -1,16 +1,39 @@
 ﻿@model ShoppingCartViewModel
 
-<h3>Kurv</h3>
+
+<h3 class="my-5">
+    Kurv
+</h3>
+
+<div class="row gx-3">
+    <div class="col-8">
+
+        
+            @if (Model.ShoppingCart.ShoppingCartItems.Count() == 0)
+            {
+                <div class="alert alert-warning"><h4>Din kurv er tom!</h4></div>
+            }
+            else
+            {
+                foreach (var shoppingCartItem in Model.ShoppingCart.ShoppingCartItems)
+                {
+                    <div class="card mb-2">@shoppingCartItem.Animal.AnimalName
+                    
+                    
 
 
-@if (Model.ShoppingCart.ShoppingCartItems.Count() == 0)
-{
-    <div class="alert alert-warning"><h4>Din kurv er tom!</h4></div>
-}
-else
-{
-    foreach (var shoppingCartItem in Model.ShoppingCart.ShoppingCartItems)
-    {
-        <li>@shoppingCartItem.Animal.AnimalName</li>
-    }
-}
+
+                                <div class="row">
+                                    <div class="col-md-4">
+                            <img class="img-fluid rounded-start p-3" src="~/img/animals/@shoppingCartItem.Animal.ImageFileName" />
+                                    </div>
+                                  </div>
+
+
+                    
+                    </div>
+                }
+            }
+
+     </div>
+</div>
