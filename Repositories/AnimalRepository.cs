@@ -14,22 +14,20 @@ namespace DyreInternatApp.Repositories
             _appDbContext = appDbContext;
             _webHostEnvironment = webHostEnvironment;
         }
-        public void AddAnimal(Animal newAnimal)
+        public async Task AddAnimal(Animal newAnimal, IFormFile? imageFile)
         {
+            if (imageFile != null)
+            {
+                var fileName = newAnimal.AnimalName + "_" + Guid.NewGuid().ToString() + @".jpg"; // CONVERTER HERE !!
+                var physicalPath = Path.Combine(_webHostEnvironment.WebRootPath, @"img\animals\", fileName);
+                using (var stream = System.IO.File.Create(physicalPath))
+                {
+                    await imageFile.CopyToAsync(stream);
+                }
+                newAnimal.ImageFileName = fileName;
+            }
             _appDbContext.Animals.Add(newAnimal);
             _appDbContext.SaveChanges();
-        }
-
-        public async Task<string> AddAnimalImageFile(IFormFile? imageFile, string animalName)
-        {
-            var fileName = animalName + "_" +Guid.NewGuid().ToString() + @".jpg"; // CONVERTER HERE !!
-            var physicalPath = Path.Combine(_webHostEnvironment.WebRootPath, @"img\animals\", fileName);
-            using (var stream = System.IO.File.Create(physicalPath))
-            {
-                await imageFile.CopyToAsync(stream);
-            }
-       
-            return fileName; 
         }
 
         public List<Animal>? GetAll()

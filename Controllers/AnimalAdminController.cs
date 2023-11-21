@@ -74,25 +74,14 @@ namespace DyreInternatApp.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("AnimalName,RaceId,Price,IsVaccinated,TagCode,DateOfBirth,Weight,Notes, ImageId, ImageFile")] AnimalVM animalVM)
+        public async Task<IActionResult> Create([Bind("AnimalName,RaceId,Price,IsVaccinated,TagCode,DateOfBirth,Weight,Notes, ImageFileName, ImageFile")] AnimalVM animalVM)
         {
             if (ModelState.IsValid)
             {
                 var animal = _mapper.Map<Animal>(animalVM);
-
-                if (animalVM.ImageFile != null)
-                {
-
-                    animal.ImageFileName = await _animalRepository.AddAnimalImageFile(animalVM.ImageFile, animalVM.AnimalName);
-
-                    if (animal.ImageFileName == null) { throw new("Error writing animal photo file to disk");  }
-                  
-                }
-                _animalRepository.AddAnimal(animal);
-
+                await _animalRepository.AddAnimal(animal, animalVM.ImageFile);
                 return RedirectToAction(nameof(Index));
             }
-   
             return View(animalVM);
         }
 
@@ -124,12 +113,21 @@ namespace DyreInternatApp.Controllers
         [ValidateAntiForgeryToken] 
 
         // missing ID check + Concurrency stuff normally found here...
-        public IActionResult Edit([Bind("AnimalId,AnimalName,RaceId,Price,IsVaccinated,TagCode,DateOfBirth,Weight,Notes,ImageId")] AnimalVM animalVM)
+        public async Task<IActionResult> Edit([Bind("AnimalId,AnimalName,RaceId,Price,IsVaccinated,TagCode,DateOfBirth,Weight,Notes, ImageFileName, ImageFile")] AnimalVM animalVM)
         {
             if (ModelState.IsValid)
             {
 
                 var animal = _mapper.Map<Animal>(animalVM);
+                //if (animalVM.ImageFile != null)
+                //{
+                //    // NEEDS SOME LOVE - ADDING EVERY TIME!
+                //    animal.ImageFileName = await _animalRepository.AddAnimalImageFile(animalVM.ImageFile, animalVM.AnimalName);
+
+                //    if (animal.ImageFileName == null) { throw new("Error writing animal photo file to disk"); }
+
+                //}
+
                 _animalRepository.Update(animal);
                 return RedirectToAction("Index");
             }
