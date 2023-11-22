@@ -1,4 +1,5 @@
 ﻿using DyreInternatApp.Models;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Policy;
 
@@ -29,7 +30,33 @@ namespace DyreInternatApp.Repositories
             _appDbContext.Animals.Add(newAnimal);
             _appDbContext.SaveChanges();
         }
+        public async Task UpdateAnimal(Animal animal, IFormFile? imageFile)
+        {
 
+            //TODO: REFACTOR
+            if (animal.ImageFileName != null & imageFile != null)
+            {
+                // existing image file on disk + new incoming image file to be
+               //created
+               // remove old file:
+                 var physicalPath = Path.Combine(_webHostEnvironment.WebRootPath, @"img\animals\", animal.ImageFileName);
+                  System.IO.File.Delete(physicalPath); 
+
+
+            }
+            if (imageFile != null)
+            {
+                var fileName = animal.AnimalName + "_" + Guid.NewGuid().ToString() + @".jpg"; // CONVERTER HERE !!
+                var physicalPath = Path.Combine(_webHostEnvironment.WebRootPath, @"img\animals\", fileName);
+                using (var stream = System.IO.File.Create(physicalPath))
+                {
+                    await imageFile.CopyToAsync(stream);
+                }
+                animal.ImageFileName = fileName;
+            }
+            _appDbContext.Animals.Update(animal);
+            _appDbContext.SaveChanges();
+        }
         public List<Animal>? GetAll()
         {
             return _appDbContext.Animals.Include(animal => animal.Race).ThenInclude(race => race.Species).ToList();
@@ -40,17 +67,10 @@ namespace DyreInternatApp.Repositories
            return _appDbContext.Animals.Include(animal => animal.Race).ThenInclude(race => race.Species)
                 .FirstOrDefault(animal => animal.AnimalId == id);    
         }
-
         public void RemoveById(int id)
         {
             var animal = GetAnimalById(id);
             _appDbContext.Animals.Remove(animal);
-            _appDbContext.SaveChanges();
-        }
-
-        public void Update(Animal animal)
-        {
-            _appDbContext.Animals.Update(animal);   
             _appDbContext.SaveChanges();
         }
     }

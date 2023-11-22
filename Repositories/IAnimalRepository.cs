@@ -8,7 +8,7 @@ namespace DyreInternatApp.Repositories
         List<Animal> GetAll();
 
         Animal? GetAnimalById(int? id);
-        void Update(Animal animal);
+        Task UpdateAnimal(Animal animal, IFormFile? imageFile);
 
         void RemoveById(int id);
     }

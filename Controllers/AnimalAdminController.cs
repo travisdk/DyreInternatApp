@@ -119,16 +119,9 @@ namespace DyreInternatApp.Controllers
             {
 
                 var animal = _mapper.Map<Animal>(animalVM);
-                //if (animalVM.ImageFile != null)
-                //{
-                //    // NEEDS SOME LOVE - ADDING EVERY TIME!
-                //    animal.ImageFileName = await _animalRepository.AddAnimalImageFile(animalVM.ImageFile, animalVM.AnimalName);
+   
 
-                //    if (animal.ImageFileName == null) { throw new("Error writing animal photo file to disk"); }
-
-                //}
-
-                _animalRepository.Update(animal);
+                await  _animalRepository.UpdateAnimal(animal, animalVM.ImageFile);
                 return RedirectToAction("Index");
             }
 

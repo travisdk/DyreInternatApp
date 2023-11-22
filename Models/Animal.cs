@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 
 namespace DyreInternatApp.Models
@@ -11,9 +12,12 @@ namespace DyreInternatApp.Models
         public string AnimalName { get; set;}
 
         public int RaceId { get; set; }
-    
+
+
+        [Precision(8,0)]
         public decimal Price { get; set;}
 
+        [UIHint("JaNej")]
         public bool IsVaccinated { get; set;}
         
         [MaxLength(20)]        

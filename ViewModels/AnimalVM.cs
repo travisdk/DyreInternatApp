@@ -16,6 +16,8 @@ namespace DyreInternatApp.ViewModels
 
         [Display(Name = "Pris DKK")]
         public decimal Price { get; set; }
+
+        [UIHint("JaNej")]
         [Display(Name = "Vaccineret?")]
         public bool IsVaccinated { get; set; }
         [Display(Name = "TagKode")]
