@@ -12,10 +12,11 @@ using Microsoft.AspNetCore.Authorization;
 using DyreInternatApp.ViewModels;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 
-namespace DyreInternatApp.Admin.Controllers
-{
+namespace DyreInternatApp.Areas.Admin.Controllers { 
 
 
+
+    [Area("Admin")]
     [Authorize]
     public class AnimalAdminController : Controller
     {

@@ -22,55 +22,60 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="6.0.16" />
+    <PackageReference Include="Swashbuckle.AspNetCore.SwaggerGen" Version="6.5.0" />
+    <PackageReference Include="Swashbuckle.AspNetCore.SwaggerUI" Version="6.5.0" />
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Areas\Admin\Data\" />
+    <Folder Include="Areas\Admin\Models\" />
+    <Folder Include="Controllers\Admin\" />
     <Folder Include="Migrations\" />
     <Folder Include="wwwroot\img\animals\" />
   </ItemGroup>
 
   <ItemGroup>
-    <Content Update="Views\AnimalAdmin\Create.cshtml">
+    <Content Update="Areas\Admin\Views\AnimalAdmin\Create.cshtml">
       <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
     </Content>
-    <Content Update="Views\AnimalAdmin\Delete.cshtml">
+    <Content Update="Areas\Admin\Views\AnimalAdmin\Delete.cshtml">
       <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
     </Content>
-    <Content Update="Views\AnimalAdmin\Details.cshtml">
+    <Content Update="Areas\Admin\Views\AnimalAdmin\Details.cshtml">
       <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
     </Content>
-    <Content Update="Views\AnimalAdmin\Edit.cshtml">
+    <Content Update="Areas\Admin\Views\AnimalAdmin\Edit.cshtml">
       <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
     </Content>
-    <Content Update="Views\AnimalAdmin\Index.cshtml">
+    <Content Update="Areas\Admin\Views\AnimalAdmin\Index.cshtml">
       <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
     </Content>
-    <Content Update="Views\RaceAdmin\Create.cshtml">
+    <Content Update="Areas\Admin\Views\RaceAdmin\Create.cshtml">
       <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
     </Content>
-    <Content Update="Views\RaceAdmin\Delete.cshtml">
+    <Content Update="Areas\Admin\Views\RaceAdmin\Delete.cshtml">
       <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
     </Content>
-    <Content Update="Views\RaceAdmin\Edit.cshtml">
+    <Content Update="Areas\Admin\Views\RaceAdmin\Edit.cshtml">
       <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
     </Content>
-    <Content Update="Views\RaceAdmin\Index.cshtml">
+    <Content Update="Areas\Admin\Views\RaceAdmin\Index.cshtml">
       <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
     </Content>
-    <Content Update="Views\SpeciesAdmin\Create.cshtml">
+    <Content Update="Areas\Admin\Views\SpeciesAdmin\Create.cshtml">
       <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
     </Content>
-    <Content Update="Views\SpeciesAdmin\Index.cshtml">
+    <Content Update="Areas\Admin\Views\SpeciesAdmin\Index.cshtml">
       <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
     </Content>

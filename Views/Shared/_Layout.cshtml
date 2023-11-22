@@ -34,14 +34,14 @@
                         @if (User.IsInRole("Admin"))
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="SpeciesAdmin" asp-action="Index">Dyrearter</a>
+                                <a class="nav-link text-dark" asp-area="Admin" asp-controller="SpeciesAdmin" asp-action="Index">Dyrearter</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="RaceAdmin" asp-action="Index">Racer</a>
+                                <a class="nav-link text-dark" asp-area="Admin" asp-controller="RaceAdmin" asp-action="Index">Racer</a>
                             </li>
 
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="AnimalAdmin" asp-action="Index">Dyrene</a>
+                                <a class="nav-link text-dark" asp-area="Admin" asp-controller="AnimalAdmin" asp-action="Index">Dyrene</a>
                             </li>
                         }
                         <partial name="_LoginPartial" />

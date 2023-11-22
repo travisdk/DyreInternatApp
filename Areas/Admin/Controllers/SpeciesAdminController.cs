@@ -1,9 +1,13 @@
 ﻿using DyreInternatApp.Models;
 using DyreInternatApp.Repositories;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace DyreInternatApp.Admin.Controllers
+namespace DyreInternatApp.Areas.Admin.Controllers
 {
+
+    [Area("Admin")]
+    [Authorize]
     public class SpeciesAdminController : Controller
     {
         private ISpeciesRepository _speciesRepository;

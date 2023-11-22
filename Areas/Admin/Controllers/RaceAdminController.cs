@@ -2,14 +2,17 @@
 using DyreInternatApp.Models;
 using DyreInternatApp.Repositories;
 using DyreInternatApp.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
 
-namespace DyreInternatApp.Admin.Controllers
+namespace DyreInternatApp.Areas.Admin.Controllers
 {
+    [Area("Admin")]
+    [Authorize]
     public class RaceAdminController : Controller
     {
         private IRaceRepository _raceRepository;
