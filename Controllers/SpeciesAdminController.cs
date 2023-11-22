@@ -2,11 +2,11 @@
 using DyreInternatApp.Repositories;
 using Microsoft.AspNetCore.Mvc;
 
-namespace DyreInternatApp.Controllers
+namespace DyreInternatApp.Admin.Controllers
 {
     public class SpeciesAdminController : Controller
     {
-        private ISpeciesRepository _speciesRepository;  
+        private ISpeciesRepository _speciesRepository;
         public SpeciesAdminController(ISpeciesRepository speciesRepository)
         {
             _speciesRepository = speciesRepository;
@@ -17,7 +17,7 @@ namespace DyreInternatApp.Controllers
             return View(species);
         }
 
-         
+
         public IActionResult Create()
         {
             return View();
@@ -25,16 +25,17 @@ namespace DyreInternatApp.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create([Bind("SpeciesId, SpeciesName")]Species newSpecies) {
-        
-           if (ModelState.IsValid)
+        public IActionResult Create([Bind("SpeciesId, SpeciesName")] Species newSpecies)
+        {
+
+            if (ModelState.IsValid)
             {
                 _speciesRepository.AddSpecies(newSpecies);
-                 return RedirectToAction("Index");
+                return RedirectToAction("Index");
             }
 
             return View(newSpecies);
-        
+
         }
     }
 }

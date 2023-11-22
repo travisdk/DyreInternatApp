@@ -12,7 +12,7 @@ using Microsoft.AspNetCore.Authorization;
 using DyreInternatApp.ViewModels;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 
-namespace DyreInternatApp.Controllers
+namespace DyreInternatApp.Admin.Controllers
 {
 
 
@@ -22,7 +22,7 @@ namespace DyreInternatApp.Controllers
         private readonly IAnimalRepository _animalRepository;
         private readonly IRaceRepository _raceRepository;
         private readonly IMapper _mapper;
-       
+
         public AnimalAdminController(IAnimalRepository animalRepository, IRaceRepository raceRepository, IMapper mapper)
         {
             _animalRepository = animalRepository;
@@ -31,24 +31,20 @@ namespace DyreInternatApp.Controllers
         }
 
         // GET: Animals
-
-
         public IActionResult Index()
         {
             List<Animal> allAnimals = _animalRepository.GetAll();
             if (allAnimals.Count == 0)
                 return View();
             var animalsVM = _mapper.Map<List<AnimalVM>>(allAnimals);
-
- 
             return View(animalsVM);
         }
 
         // GET: Animals/Details/5
-        public  IActionResult  Details(int? id)
+        public IActionResult Details(int? id)
         {
 
-            var animal =  _animalRepository.GetAnimalById(id);
+            var animal = _animalRepository.GetAnimalById(id);
             if (animal == null)
             {
                 return NotFound();
@@ -62,10 +58,10 @@ namespace DyreInternatApp.Controllers
             AnimalVM animalVM = new AnimalVM();
             var allAnimalTypes = _raceRepository.GetAll().Select(s => new
             {
-                RaceId = s.RaceId,
+                s.RaceId,
                 Description = $"{s.Species.SpeciesName} / {s.RaceName}"
             }).ToList();
-            
+
             var selList = new SelectList(allAnimalTypes, "RaceId", "Description");
             animalVM.RaceList = selList;
             return View(animalVM);
@@ -100,7 +96,7 @@ namespace DyreInternatApp.Controllers
             var animalVM = _mapper.Map<AnimalVM>(animal);
             var allAnimalTypes = _raceRepository.GetAll().Select(s => new
             {
-                RaceId = s.RaceId,
+                s.RaceId,
                 Description = $"{s.Species.SpeciesName} / {s.RaceName}"
             }).ToList();
 
@@ -110,24 +106,21 @@ namespace DyreInternatApp.Controllers
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken] 
+        [ValidateAntiForgeryToken]
 
-        // missing ID check + Concurrency stuff normally found here...
+        //TODO: missing ID check + Concurrency stuff normally found here...
         public async Task<IActionResult> Edit([Bind("AnimalId,AnimalName,RaceId,Price,IsVaccinated,TagCode,DateOfBirth,Weight,Notes, ImageFileName, ImageFile")] AnimalVM animalVM)
         {
             if (ModelState.IsValid)
             {
-
                 var animal = _mapper.Map<Animal>(animalVM);
-   
-
-                await  _animalRepository.UpdateAnimal(animal, animalVM.ImageFile);
+                await _animalRepository.UpdateAnimal(animal, animalVM.ImageFile);
                 return RedirectToAction("Index");
             }
 
             var allAnimalTypes = _raceRepository.GetAll().Select(s => new
             {
-                RaceId = s.RaceId,
+                s.RaceId,
                 Description = $"{s.Species.SpeciesName} / {s.RaceName}"
             }).ToList();
 
@@ -136,47 +129,33 @@ namespace DyreInternatApp.Controllers
             return View(animalVM);
         }
 
-        //// GET: Animals/Delete/5
-        //public async Task<IActionResult> Delete(int? id)
-        //{
-        //    if (id == null || _context.Animals == null)
-        //    {
-        //        return NotFound();
-        //    }
-
-        //    var animal = await _context.Animals
-        //        .Include(a => a.Race)
-        //        .FirstOrDefaultAsync(m => m.AnimalId == id);
-        //    if (animal == null)
-        //    {
-        //        return NotFound();
-        //    }
-
-        //    return View(animal);
-        //}
-
-        //// POST: Animals/Delete/5
-        //[HttpPost, ActionName("Delete")]
-        //[ValidateAntiForgeryToken]
-        //public async Task<IActionResult> DeleteConfirmed(int id)
-        //{
-        //    if (_context.Animals == null)
-        //    {
-        //        return Problem("Entity set 'AppDbContext.Animals'  is null.");
-        //    }
-        //    var animal = await _context.Animals.FindAsync(id);
-        //    if (animal != null)
-        //    {
-        //        _context.Animals.Remove(animal);
-        //    }
-
-        //    await _context.SaveChangesAsync();
-        //    return RedirectToAction(nameof(Index));
-        //}
-
-        private bool AnimalExists(int id)
+        // GET: Animals/Delete/5
+        public async Task<IActionResult> Delete(int? id)
         {
-            return (_animalRepository.GetAll()?.Any(e => e.AnimalId == id)).GetValueOrDefault();
+
+            var animal = _animalRepository.GetAnimalById(id);
+            if (animal == null)
+            {
+                return NotFound();
+            }
+
+            return View(animal);
         }
+
+        // POST: Animals/Delete/5
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteConfirmed(int id)
+        {
+            if (_animalRepository.GetAll() == null)
+            {
+                return Problem("Entity set 'AppDbContext.Animals'  is null.");
+            }
+
+            _animalRepository.RemoveById(id);
+
+            return RedirectToAction(nameof(Index));
+        }
+
     }
 }

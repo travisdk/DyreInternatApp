@@ -8,7 +8,7 @@ using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
 
-namespace DyreInternatApp.Controllers
+namespace DyreInternatApp.Admin.Controllers
 {
     public class RaceAdminController : Controller
     {
