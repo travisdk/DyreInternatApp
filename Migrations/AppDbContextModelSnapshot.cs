@@ -52,8 +52,8 @@ namespace DyreInternatApp.Migrations
                         .HasColumnType("int");
 
                     b.Property<decimal>("Price")
-                        .HasPrecision(8)
-                        .HasColumnType("decimal(8,0)");
+                        .HasPrecision(8, 2)
+                        .HasColumnType("decimal(8,2)");
 
                     b.Property<int>("RaceId")
                         .HasColumnType("int");
@@ -350,14 +350,14 @@ namespace DyreInternatApp.Migrations
                         new
                         {
                             Id = "a227247c-5650-4b39-b1ad-83f0db7292e2",
-                            ConcurrencyStamp = "4df01192-abfd-4c21-86a2-b95e621ccf0f",
+                            ConcurrencyStamp = "362673cb-6463-4944-b127-31c17291ef4d",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
                             Id = "de450d59-55f6-4bbf-9d3b-2425b46bb861",
-                            ConcurrencyStamp = "6c0a9050-97d0-4328-9be1-f9efed07ee39",
+                            ConcurrencyStamp = "f0d5e347-3c00-4b45-b18a-9d3e98b624f2",
                             Name = "Customer",
                             NormalizedName = "CUSTOMER"
                         });

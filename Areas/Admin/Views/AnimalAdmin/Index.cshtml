@@ -9,7 +9,7 @@
 <h1>Index</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create">Opret ny</a>
 </p>
 @if (Model != null && Model.Count() > 0)
 {
@@ -56,9 +56,9 @@
                     </td>
 
                     <td>
-                        <a asp-action="Edit" asp-route-id="@item.AnimalId">Edit</a> |
-                        <a asp-action="Details" asp-route-id="@item.AnimalId">Details</a> |
-                        <a asp-action="Delete" asp-route-id="@item.AnimalId">Delete</a>
+                        <a asp-action="Edit" asp-route-id="@item.AnimalId">Ændre</a> |
+                        <a asp-action="Details" asp-route-id="@item.AnimalId">Detaljer</a> |
+                        <a asp-action="Delete" asp-route-id="@item.AnimalId">Slet</a>
                     </td>
                 </tr>
             }

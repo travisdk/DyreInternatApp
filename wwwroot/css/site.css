@@ -16,3 +16,9 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+.shop-brand {
+    max-width:70px;
+    border:0;
+
+}

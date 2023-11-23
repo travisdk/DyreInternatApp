@@ -8,40 +8,48 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - DyreInternatApp</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <title>@ViewData["Title"] - Roskilde DyreInternat</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="~/css/bootstrap.custom.min.css" />
+
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/DyreInternatApp.styles.css" asp-append-version="true" />
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+        <nav class="navbar  navbar-expand-sm navbar-toggleable-sm  navbar-dark bg-secondary border-bottom box-shadow mb-3 px-lg-4">
             <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">DyreInternatApp</a>
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
+                    <div class="d-flex align-items-center ">
+                    <img src="~/img/resources/dog_and_cat.png" class="img-fluid shop-brand" />
+                    <span style="line-height: 0.8; font-size: .9rem; margin-top: .3em; margin-left: .2em;">Roskilde<br />DyreInternat</span>
+                    </div>
+                
+                </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between ms-5">
                     <ul class="navbar-nav flex-grow-1">
-
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Animal" asp-action="Index">Vores Dyr</a>
+                            <a class="nav-link " asp-area="" asp-controller="Animal" asp-action="Index">Vores Dyr</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="ShoppingCart" asp-action="Index">Kurv</a>
+                            <a class="nav-link " asp-area="" asp-controller="ShoppingCart" asp-action="Index">Kurv</a>
                         </li>
                         @if (User.IsInRole("Admin"))
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="Admin" asp-controller="SpeciesAdmin" asp-action="Index">Dyrearter</a>
+                                <a class="nav-link " asp-area="Admin" asp-controller="SpeciesAdmin" asp-action="Index">Dyrearter</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="Admin" asp-controller="RaceAdmin" asp-action="Index">Racer</a>
+                                <a class="nav-link " asp-area="Admin" asp-controller="RaceAdmin" asp-action="Index">Racer</a>
                             </li>
-
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="Admin" asp-controller="AnimalAdmin" asp-action="Index">Dyrene</a>
+                                <a class="nav-link " asp-area="Admin" asp-controller="AnimalAdmin" asp-action="Index">Dyrene</a>
                             </li>
                         }
                         <partial name="_LoginPartial" />
@@ -58,7 +66,7 @@
 
     <footer class="border-top footer text-muted">
         <div class="container">
-            &copy; 2023 - DyreInternatApp - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            &copy; 2023 - Roskilde DyreInternat - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>

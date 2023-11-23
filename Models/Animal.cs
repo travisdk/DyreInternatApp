@@ -14,7 +14,7 @@ namespace DyreInternatApp.Models
         public int RaceId { get; set; }
 
 
-        [Precision(8,0)]
+        [Precision(8,2)]
         public decimal Price { get; set;}
 
         [UIHint("JaNej")]

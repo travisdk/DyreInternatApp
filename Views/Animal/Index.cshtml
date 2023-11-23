@@ -11,32 +11,13 @@
 {
    <div class="container">
 
-       <div class="row row-cols-lg-3">
+       <div class="row g-4">
 
            @foreach (var animal in @Model) {
-                <div class="col">
-                    <div class="card">
-                        @if (@animal.ImageFileName != null)
-                        {
-                            <img class="card-img" src="~/img/animals/@animal.ImageFileName" />
-                        }
-                       <div class="card-body">
-                       <h4 class="card-title">@animal.AnimalName</h4>
-                       <h5 class="card-subtitle">@animal.Race.RaceName</h5>
-                       <p class="card-text">@animal.Notes</p>
-                       <p class="text-black-50">Pris:  DKK @animal.Price inkl.moms</p>
-                       <p class="card-text text-secondary">Vaccineret: @Html.DisplayFor(model => animal.IsVaccinated)</p>
-                       <a class="btn btn-success" asp-controller="ShoppingCart" asp-action="AddToShoppingCart" asp-route-animalid="@animal.AnimalId">+ Tilføj</a>
-                      
-                   </div>
-               </div>
-           </div>
-
+                <partial name="_AnimalCard" model="animal" />
            }
        </div>
    </div>
-
-
 }
 else
 {

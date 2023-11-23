@@ -8,12 +8,13 @@ namespace DyreInternatApp.ViewModels
     public class AnimalVM
     {
         public int AnimalId { get; set; }
-        [Required]
+
         [Display(Name = "Navn")]
+        [Required(ErrorMessage ="Dyrets navn er påkrævet")]
         public string AnimalName { get; set; }
         [Required]
         public int RaceId { get; set; }
-
+        [Required(ErrorMessage = "Dyrets salgspris er påkrævet")]
         [Display(Name = "Pris DKK")]
         public decimal Price { get; set; }
 
@@ -24,7 +25,9 @@ namespace DyreInternatApp.ViewModels
         public string? TagCode { get; set; }
         [Display(Name = "Fødselsdato")]
         public DateTime? DateOfBirth { get; set; }
-        [Required]
+
+        [Required(ErrorMessage = "Dyrets vægt i KG er påkrævet")]
+
         [Display(Name = "Vægt KG")]
         public int Weight { get; set; }  // KG
         [Display(Name = "Beskrivelse")]

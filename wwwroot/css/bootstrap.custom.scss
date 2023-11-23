@@ -1,0 +1,25 @@
+﻿
+$primary: #003c64 !default;
+$secondary: #1078b9 !default;
+$success: #009853 !default;
+$info: #584a54 !default;
+$warning: #e0c700 !default;
+$danger: #ef0600 !default;
+$light: #c9e8fc !default;
+$dark: #001932 !default;
+
+$min-contrast-ratio: 1.9 !default;
+
+
+// Fonts
+
+// stylelint-disable-next-line value-keyword-case
+$font-family-sans-serif: Lato, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol" !default;
+
+
+
+@import "../lib/bootstrap/scss/bootstrap";
+
+.nav-link {
+    color: $light;
+}

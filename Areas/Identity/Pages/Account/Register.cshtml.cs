@@ -95,8 +95,8 @@ namespace DyreInternatApp.Areas.Identity.Pages.Account
             ///     directly from your code. This API may change or be removed in future releases.
             /// </summary>
             [DataType(DataType.Password)]
-            [Display(Name = "Confirm password")]
-            [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
+            [Display(Name = "Bekræft password")]
+            [Compare("Password", ErrorMessage = "De 2 passwords stemmer ikke overens!")]
             public string ConfirmPassword { get; set; }
 
             [Required]
@@ -125,6 +125,8 @@ namespace DyreInternatApp.Areas.Identity.Pages.Account
 
             [Required]
             [Phone]
+            [Display(Name = "Telefon")]
+
             public string Phone { get; set; }
 
         }
