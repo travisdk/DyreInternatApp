@@ -1,14 +1,11 @@
 ﻿@model ShoppingCartViewModel
 
-
-<h3 class="my-5">
+<h3>
     Kurv
 </h3>
 
-<div class="row gx-3">
+<div class="row g-3">
     <div class="col-8">
-
-        
             @if (Model.ShoppingCart.ShoppingCartItems.Count() == 0)
             {
                 <div class="alert alert-warning"><h4>Din kurv er tom!</h4></div>
@@ -17,23 +14,15 @@
             {
                 foreach (var shoppingCartItem in Model.ShoppingCart.ShoppingCartItems)
                 {
-                    <div class="card mb-2">@shoppingCartItem.Animal.AnimalName
-                    
-                    
-
-
-
-                                <div class="row">
-                                    <div class="col-md-4">
-                            <img class="img-fluid rounded-start p-3" src="~/img/animals/@shoppingCartItem.Animal.ImageFileName" />
-                                    </div>
-                                  </div>
-
-
-                    
-                    </div>
+                    <partial name="_AnimalCardForCart" model="shoppingCartItem.Animal" />
                 }
+                <div class="mb-4">
+                    <hr />
+                    <h4 class="text-secondary fw-bolder mb-0 ">Total DKK: @Model.ShoppingCartTotal</h4>
+                    <p class="p-0 text-secondary fst-italic">inkl. moms</p>
+                </div>
             }
+           
 
      </div>
 </div>

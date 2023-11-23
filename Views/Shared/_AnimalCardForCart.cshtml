@@ -1,0 +1,17 @@
+﻿@model Animal
+
+<div class="col-12 col-lg-3">
+    <div class="card h-100">
+        @if (@Model.ImageFileName != null)
+        {
+            <img class="card-img" src="~/img/animals/@Model.ImageFileName" style="" />
+        }
+        <div class="card-body">
+            <h4 class="card-title">@Model.AnimalName</h4>
+            <p class="card-subtitle">@Model.Race.RaceName</p>
+            <p class="text-black-50">Pris: DKK @Model.Price </p>
+            <a class="btn btn-warning" asp-controller="ShoppingCart" asp-action="RemoveFromShoppingCart" asp-route-animalid="@Model.AnimalId">Fjern</a>
+        </div>
+     
+    </div>
+</div>

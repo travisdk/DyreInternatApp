@@ -10,12 +10,12 @@
             <h4 class="card-title">@Model.AnimalName</h4>
             <h5 class="card-subtitle">@Model.Race.RaceName</h5>
             <p class="card-text">@Model.Notes</p>
-            <p class="text-black-50">Pris:  DKK @Model.Price inkl.moms</p>
-            <p class="card-text text-secondary">Vaccineret: @Html.DisplayFor(model => Model.IsVaccinated)</p>
+            <p class="text-black-75">Pris: DKK @Model.Price inkl.moms</p>
+            <p class="text-black-50">Vaccineret: @Html.DisplayFor(model => Model.IsVaccinated)</p>
            
         </div>
         <div class="card-footer bg-primary-200">
-            <a class="btn btn-success" asp-controller="ShoppingCart" asp-action="AddToShoppingCart" asp-route-Modelid="@Model.AnimalId">+ Tilføj</a>
+            <a class="btn btn-success" asp-controller="ShoppingCart" asp-action="AddToShoppingCart" asp-route-animalid="@Model.AnimalId">Tilføj</a>
         </div>
     </div>
 </div>

@@ -53,9 +53,7 @@ namespace DyreInternatApp.Models
 
         public List<ShoppingCartItem> GetShoppingCartItems()
         {
-
-      
-            return ShoppingCartItems ??= _appDbContext.ShoppingCartItems.Include(sci => sci.Animal).Where(s=>s.ShoppingCartId  == ShoppingCartId)
+            return ShoppingCartItems ??= _appDbContext.ShoppingCartItems.Include(sci => sci.Animal).ThenInclude(a => a.Race).Where(s=>s.ShoppingCartId  == ShoppingCartId)
               .ToList();   
         }
 
