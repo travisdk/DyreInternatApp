@@ -11,33 +11,33 @@ namespace DyreInternatApp.Repositories
         {
             _appDbContext = appDbContext;
         }
-        public void AddRace(Race newRace)
+        public async Task AddRace(Race newRace)
         {
             _appDbContext.Races.Add(newRace);
-            _appDbContext.SaveChanges();
+             await  _appDbContext.SaveChangesAsync();
         }
 
-        public List<Race> GetAll()
+        public async Task<List<Race>> GetAll()
         {
-            return _appDbContext.Races.Include(r => r.Species).OrderBy(r => r.Species.SpeciesName).ThenBy(r=>r.RaceName).ToList();    
+            return await _appDbContext.Races.Include(r => r.Species).OrderBy(r => r.Species.SpeciesName).ThenBy(r=>r.RaceName).ToListAsync();    
         }
 
-        public Race? GetRaceById(int? id)
+        public async Task<Race?> GetRaceById(int? id)
         {
-            return _appDbContext.Races.Include(r => r.Species).FirstOrDefault(r => r.RaceId == id); 
+            return await _appDbContext.Races.Include(r => r.Species).FirstOrDefaultAsync(r => r.RaceId == id); 
         }
 
-        public void RemoveById(int id)
+        public async Task RemoveById(int id)
         {
-            var race = GetRaceById(id);
+            var race = await GetRaceById(id);
             _appDbContext.Races.Remove(race);
-            _appDbContext.SaveChanges();
+            await  _appDbContext.SaveChangesAsync();
         }
 
-        public void Update(Race race)
+        public async Task Update(Race race)
         {
             _appDbContext.Races.Update(race);
-            _appDbContext.SaveChanges();
+            await _appDbContext.SaveChangesAsync();
         }
     }
 }

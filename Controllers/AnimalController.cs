@@ -16,9 +16,9 @@ namespace DyreInternatApp.Controllers
             _animalRepository = animalRepository;
             _mapper = mapper;
         }
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            List<Animal> allAnimals = _animalRepository.GetAll();
+            List<Animal> allAnimals = await _animalRepository.GetAll();
             var allAnimalsVM = _mapper.Map<List<AnimalVM>>(allAnimals);
             return View(allAnimalsVM);
         }

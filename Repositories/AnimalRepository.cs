@@ -28,7 +28,7 @@ namespace DyreInternatApp.Repositories
                 newAnimal.ImageFileName = fileName;
             }
             _appDbContext.Animals.Add(newAnimal);
-            _appDbContext.SaveChanges();
+            await _appDbContext.SaveChangesAsync();
         }
         public async Task UpdateAnimal(Animal animal, IFormFile? imageFile)
         {
@@ -55,23 +55,23 @@ namespace DyreInternatApp.Repositories
                 animal.ImageFileName = fileName;
             }
             _appDbContext.Animals.Update(animal);
-            _appDbContext.SaveChanges();
+            await _appDbContext.SaveChangesAsync();
         }
-        public List<Animal>? GetAll()
+        public async Task<List<Animal>?> GetAll()
         {
-            return _appDbContext.Animals.Include(animal => animal.Race).ThenInclude(race => race.Species).ToList();
+            return await _appDbContext.Animals.Include(animal => animal.Race).ThenInclude(race => race.Species).ToListAsync();
         }
 
-        public Animal? GetAnimalById(int? id)
+        public async Task< Animal?> GetAnimalById(int? id)
         {
-           return _appDbContext.Animals.Include(animal => animal.Race).ThenInclude(race => race.Species)
-                .FirstOrDefault(animal => animal.AnimalId == id);    
+           return await _appDbContext.Animals.Include(animal => animal.Race).ThenInclude(race => race.Species)
+                .FirstOrDefaultAsync(animal => animal.AnimalId == id);    
         }
-        public void RemoveById(int id)
+        public async Task RemoveById(int id)
         {
-            var animal = GetAnimalById(id);
+            var animal = await GetAnimalById(id);
             _appDbContext.Animals.Remove(animal);
-            _appDbContext.SaveChanges();
+            await  _appDbContext.SaveChangesAsync();
         }
     }
 }

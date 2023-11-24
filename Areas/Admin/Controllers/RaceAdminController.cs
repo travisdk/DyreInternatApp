@@ -32,50 +32,51 @@ namespace DyreInternatApp.Areas.Admin.Controllers
         }
 
 
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
 
         {
             RaceVM raceVM = new RaceVM();
-            var selList = new SelectList(_speciesRepository.GetAll(), "SpeciesId", "SpeciesName");
+            var selList = new SelectList(await _speciesRepository.GetAll(), "SpeciesId", "SpeciesName");
             raceVM.SpeciesList = selList;
             return View(raceVM);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create([Bind("RaceId, RaceName, SpeciesId")] RaceVM newRaceVM)
+        public async Task<IActionResult> Create([Bind("RaceId, RaceName, SpeciesId")] RaceVM newRaceVM)
         {
 
             if (ModelState.IsValid)
             {
                 var newRace = _mapper.Map<Race>(newRaceVM);
-                _raceRepository.AddRace(newRace);
+                await _raceRepository.AddRace(newRace);
                 return RedirectToAction("Index");
             }
 
-            var selList = new SelectList(_speciesRepository.GetAll(), "SpeciesId", "SpeciesName", newRaceVM.SpeciesId);
+            var selList = new SelectList(await _speciesRepository.GetAll(), "SpeciesId", "SpeciesName", newRaceVM.SpeciesId);
             newRaceVM.SpeciesList = selList;
             return View(newRaceVM);
 
         }
 
-        public IActionResult Edit(int? id)
+        public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null || _raceRepository.GetAll().Any() == false)
+            var allRaces = await _raceRepository.GetAll();
+            if (id == null || allRaces.Any() == false)
             {
 
 
                 return NotFound();
             }
 
-            var race = _raceRepository.GetRaceById(id);
+            var race = await _raceRepository.GetRaceById(id);
             if (race == null)
             {
                 return NotFound();
             }
 
             var raceVM = _mapper.Map<RaceVM>(race);
-            var selList = new SelectList(_speciesRepository.GetAll(), "SpeciesId", "SpeciesName");
+            var selList = new SelectList(await _speciesRepository.GetAll(), "SpeciesId", "SpeciesName");
             raceVM.SpeciesList = selList;
 
 
@@ -84,24 +85,24 @@ namespace DyreInternatApp.Areas.Admin.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit([Bind("RaceId, RaceName, SpeciesId")] RaceVM raceVM)
+        public async Task<IActionResult> Edit([Bind("RaceId, RaceName, SpeciesId")] RaceVM raceVM)
         {
 
             if (ModelState.IsValid)
             {
                 var race = _mapper.Map<Race>(raceVM);
-                _raceRepository.Update(race);
+                await _raceRepository.Update(race);
                 return RedirectToAction("Index");
             }
-            var selList = new SelectList(_speciesRepository.GetAll(), "SpeciesId", "SpeciesName", raceVM.SpeciesId);
+            var selList = new SelectList(await _speciesRepository.GetAll(), "SpeciesId", "SpeciesName", raceVM.SpeciesId);
             raceVM.SpeciesList = selList;
             return View(raceVM);
 
         }
 
-        public IActionResult Delete(int? id)
+        public async Task<IActionResult> Delete(int? id)
         {
-            var race = _raceRepository.GetRaceById(id);
+            var race =  await _raceRepository.GetRaceById(id);
             if (race == null)
             {
                 return NotFound();
@@ -115,7 +116,7 @@ namespace DyreInternatApp.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            _raceRepository.RemoveById(id);
+            await _raceRepository.RemoveById(id);
             return RedirectToAction(nameof(Index));
         }
     }

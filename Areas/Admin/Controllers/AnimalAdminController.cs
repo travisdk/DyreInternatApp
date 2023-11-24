@@ -32,9 +32,9 @@ namespace DyreInternatApp.Areas.Admin.Controllers {
         }
 
         // GET: Animals
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            List<Animal> allAnimals = _animalRepository.GetAll();
+            List<Animal> allAnimals =  await _animalRepository.GetAll();
             if (allAnimals.Count == 0)
                 return View();
             var animalsVM = _mapper.Map<List<AnimalVM>>(allAnimals);
@@ -42,10 +42,10 @@ namespace DyreInternatApp.Areas.Admin.Controllers {
         }
 
         // GET: Animals/Details/5
-        public IActionResult Details(int? id)
+        public async Task<IActionResult> Details(int? id)
         {
 
-            var animal = _animalRepository.GetAnimalById(id);
+            var animal = await _animalRepository.GetAnimalById(id);
             if (animal == null)
             {
                 return NotFound();
@@ -54,14 +54,15 @@ namespace DyreInternatApp.Areas.Admin.Controllers {
             return View(animal);
         }
 
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
             AnimalVM animalVM = new AnimalVM();
-            var allAnimalTypes = _raceRepository.GetAll().Select(s => new
+            var allRaces = await _raceRepository.GetAll();
+            var allAnimalTypes = allRaces.Select(s => new
             {
                 s.RaceId,
                 Description = $"{s.Species.SpeciesName} / {s.RaceName}"
-            }).ToList();
+            });
 
             var selList = new SelectList(allAnimalTypes, "RaceId", "Description");
             animalVM.RaceList = selList;
@@ -83,23 +84,27 @@ namespace DyreInternatApp.Areas.Admin.Controllers {
         }
 
         // GET: Animals/Edit/5
-        public IActionResult Edit(int? id)
+        public async Task<IActionResult> Edit(int? id)
+
         {
-            if (id == null || _animalRepository.GetAll().Any() == false)
+
+            var allAnimals = await _animalRepository.GetAll();
+            if (id == null || allAnimals.Any() == false)
             {
                 return NotFound();
             }
-            var animal = _animalRepository.GetAnimalById(id);
+            var animal =  await _animalRepository.GetAnimalById(id);
             if (animal == null)
             {
                 return NotFound();
             }
+            var races = await _raceRepository.GetAll();
             var animalVM = _mapper.Map<AnimalVM>(animal);
-            var allAnimalTypes = _raceRepository.GetAll().Select(s => new
+            var allAnimalTypes = races.Select(s => new
             {
                 s.RaceId,
                 Description = $"{s.Species.SpeciesName} / {s.RaceName}"
-            }).ToList();
+            });
 
             var selList = new SelectList(allAnimalTypes, "RaceId", "Description");
             animalVM.RaceList = selList;
@@ -118,12 +123,12 @@ namespace DyreInternatApp.Areas.Admin.Controllers {
                 await _animalRepository.UpdateAnimal(animal, animalVM.ImageFile);
                 return RedirectToAction("Index");
             }
-
-            var allAnimalTypes = _raceRepository.GetAll().Select(s => new
+            var allRaces = await _raceRepository.GetAll();
+            var allAnimalTypes = allRaces.Select(s => new
             {
                 s.RaceId,
                 Description = $"{s.Species.SpeciesName} / {s.RaceName}"
-            }).ToList();
+            });
 
             var selList = new SelectList(allAnimalTypes, "RaceId", "Description");
             animalVM.RaceList = selList;
@@ -134,7 +139,7 @@ namespace DyreInternatApp.Areas.Admin.Controllers {
         public async Task<IActionResult> Delete(int? id)
         {
 
-            var animal = _animalRepository.GetAnimalById(id);
+            var animal = await _animalRepository.GetAnimalById(id);
             if (animal == null)
             {
                 return NotFound();
@@ -148,12 +153,13 @@ namespace DyreInternatApp.Areas.Admin.Controllers {
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            if (_animalRepository.GetAll() == null)
+            var allAnimals = await _animalRepository.GetAll();
+            if (allAnimals == null)
             {
                 return Problem("Entity set 'AppDbContext.Animals'  is null.");
             }
 
-            _animalRepository.RemoveById(id);
+            await _animalRepository.RemoveById(id);
 
             return RedirectToAction(nameof(Index));
         }

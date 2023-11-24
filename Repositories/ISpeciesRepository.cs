@@ -4,7 +4,7 @@ namespace DyreInternatApp.Repositories
 {
     public interface ISpeciesRepository
     {
-        void AddSpecies(Species newSpecies);
-        List<Species> GetAll(); 
+        Task AddSpecies(Species newSpecies);
+        Task<List<Species>> GetAll(); 
     }
 }

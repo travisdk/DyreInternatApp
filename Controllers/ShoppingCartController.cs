@@ -24,9 +24,9 @@ namespace DyreInternatApp.Controllers
             return View(scVM);
         }
 
-        public RedirectToActionResult AddToShoppingCart(int animalId)
+        public async Task<RedirectToActionResult> AddToShoppingCart(int animalId)
         {
-            var selectedAnimal = _animalRepository.GetAnimalById(animalId);
+            var selectedAnimal = await _animalRepository.GetAnimalById(animalId);
             if (selectedAnimal != null)
             {
                 _shoppingCart.AddToCart(selectedAnimal);
@@ -35,9 +35,9 @@ namespace DyreInternatApp.Controllers
 
            return RedirectToAction("Index");
         }
-        public RedirectToActionResult RemoveFromShoppingCart(int animalId)
+        public async Task<RedirectToActionResult> RemoveFromShoppingCart(int animalId)
         {
-            var selectedAnimal = _animalRepository.GetAnimalById(animalId);
+            var selectedAnimal = await _animalRepository.GetAnimalById(animalId);
             if (selectedAnimal!=null)
             {
                 _shoppingCart.RemoveFromCart(selectedAnimal);

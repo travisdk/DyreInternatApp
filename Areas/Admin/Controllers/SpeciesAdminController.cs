@@ -15,9 +15,9 @@ namespace DyreInternatApp.Areas.Admin.Controllers
         {
             _speciesRepository = speciesRepository;
         }
-        public IActionResult Index()
+        public async Task< IActionResult> Index()
         {
-            var species = _speciesRepository.GetAll();
+            var species = await _speciesRepository.GetAll();
             return View(species);
         }
 
@@ -29,12 +29,12 @@ namespace DyreInternatApp.Areas.Admin.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create([Bind("SpeciesId, SpeciesName")] Species newSpecies)
+        public async Task<IActionResult> Create([Bind("SpeciesId, SpeciesName")] Species newSpecies)
         {
 
             if (ModelState.IsValid)
             {
-                _speciesRepository.AddSpecies(newSpecies);
+                await _speciesRepository.AddSpecies(newSpecies);
                 return RedirectToAction("Index");
             }
 

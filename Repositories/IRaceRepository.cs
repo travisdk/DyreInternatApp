@@ -4,12 +4,12 @@ namespace DyreInternatApp.Repositories
 {
     public interface IRaceRepository
     {
-        void AddRace(Race newRace);
-        List<Race> GetAll();
+        Task AddRace(Race newRace);
+        Task<List<Race>> GetAll();
 
-        Race? GetRaceById(int? id);
-        void Update(Race race);
+        Task<Race?> GetRaceById(int? id);
+        Task Update(Race race);
 
-        void RemoveById(int id); 
+        Task RemoveById(int id); 
     }
 }

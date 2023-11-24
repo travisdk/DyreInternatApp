@@ -1,4 +1,5 @@
 ﻿using DyreInternatApp.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace DyreInternatApp.Repositories
 {
@@ -9,16 +10,15 @@ namespace DyreInternatApp.Repositories
         {
             _appDbContext = appDbContext;
         }
-        public void AddSpecies(Species newSpecies)
+        public async Task AddSpecies(Species newSpecies)
         {
-            
             _appDbContext.Add(newSpecies);
-            _appDbContext.SaveChanges();
+            await _appDbContext.SaveChangesAsync();
         }
 
-        public List<Species> GetAll()
+        public async Task<List<Species>> GetAll()
         {
-            return _appDbContext.Species.ToList();
+            return await _appDbContext.Species.ToListAsync();
         }
     }
 }
