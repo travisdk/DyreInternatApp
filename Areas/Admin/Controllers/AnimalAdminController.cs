@@ -36,7 +36,9 @@ namespace DyreInternatApp.Areas.Admin.Controllers {
         {
             List<Animal> allAnimals =  await _animalRepository.GetAll();
             if (allAnimals.Count == 0)
+            {
                 return View();
+            }
             var animalsVM = _mapper.Map<List<AnimalVM>>(allAnimals);
             return View(animalsVM);
         }
@@ -44,28 +46,18 @@ namespace DyreInternatApp.Areas.Admin.Controllers {
         // GET: Animals/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-
             var animal = await _animalRepository.GetAnimalById(id);
             if (animal == null)
             {
                 return NotFound();
             }
-
             return View(animal);
         }
 
         public async Task<IActionResult> Create()
         {
             AnimalVM animalVM = new AnimalVM();
-            var allRaces = await _raceRepository.GetAll();
-            var allAnimalTypes = allRaces.Select(s => new
-            {
-                s.RaceId,
-                Description = $"{s.Species.SpeciesName} / {s.RaceName}"
-            });
-
-            var selList = new SelectList(allAnimalTypes, "RaceId", "Description");
-            animalVM.RaceList = selList;
+            animalVM.RaceList = await GetRacesSelectList();
             return View(animalVM);
         }
 
@@ -85,7 +77,6 @@ namespace DyreInternatApp.Areas.Admin.Controllers {
 
         // GET: Animals/Edit/5
         public async Task<IActionResult> Edit(int? id)
-
         {
 
             var allAnimals = await _animalRepository.GetAll();
@@ -98,19 +89,14 @@ namespace DyreInternatApp.Areas.Admin.Controllers {
             {
                 return NotFound();
             }
-            var races = await _raceRepository.GetAll();
+        
             var animalVM = _mapper.Map<AnimalVM>(animal);
-            var allAnimalTypes = races.Select(s => new
-            {
-                s.RaceId,
-                Description = $"{s.Species.SpeciesName} / {s.RaceName}"
-            });
-
-            var selList = new SelectList(allAnimalTypes, "RaceId", "Description");
-            animalVM.RaceList = selList;
+            animalVM.RaceList = await GetRacesSelectList();
             return View(animalVM);
         }
 
+
+ 
         [HttpPost]
         [ValidateAntiForgeryToken]
 
@@ -123,22 +109,13 @@ namespace DyreInternatApp.Areas.Admin.Controllers {
                 await _animalRepository.UpdateAnimal(animal, animalVM.ImageFile);
                 return RedirectToAction("Index");
             }
-            var allRaces = await _raceRepository.GetAll();
-            var allAnimalTypes = allRaces.Select(s => new
-            {
-                s.RaceId,
-                Description = $"{s.Species.SpeciesName} / {s.RaceName}"
-            });
-
-            var selList = new SelectList(allAnimalTypes, "RaceId", "Description");
-            animalVM.RaceList = selList;
+            animalVM.RaceList = await GetRacesSelectList();
             return View(animalVM);
         }
 
         // GET: Animals/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-
             var animal = await _animalRepository.GetAnimalById(id);
             if (animal == null)
             {
@@ -160,9 +137,19 @@ namespace DyreInternatApp.Areas.Admin.Controllers {
             }
 
             await _animalRepository.RemoveById(id);
-
             return RedirectToAction(nameof(Index));
         }
+        private async Task<SelectList> GetRacesSelectList()
+        {
+            var allRaces = await _raceRepository.GetAll();
+            var allAnimalTypes = allRaces.Select(s => new
+            {
+                s.RaceId,
+                Description = $"{s.Species.SpeciesName} / {s.RaceName}"
+            });
 
+            var selList = new SelectList(allAnimalTypes, "RaceId", "Description");
+            return selList;
+        }
     }
 }

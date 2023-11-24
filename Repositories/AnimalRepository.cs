@@ -62,7 +62,7 @@ namespace DyreInternatApp.Repositories
             return await _appDbContext.Animals.Include(animal => animal.Race).ThenInclude(race => race.Species).ToListAsync();
         }
 
-        public async Task< Animal?> GetAnimalById(int? id)
+        public async Task<Animal?> GetAnimalById(int? id)
         {
            return await _appDbContext.Animals.Include(animal => animal.Race).ThenInclude(race => race.Species)
                 .FirstOrDefaultAsync(animal => animal.AnimalId == id);    
