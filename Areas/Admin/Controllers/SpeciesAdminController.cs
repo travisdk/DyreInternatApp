@@ -1,5 +1,5 @@
-﻿using DyreInternatApp.Models;
-using DyreInternatApp.Repositories;
+﻿using DyreInternatApp.SharedModels.Models;
+using DyreInternatApp.DAL.Repositories;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 

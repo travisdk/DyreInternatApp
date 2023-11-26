@@ -1,4 +1,5 @@
-﻿using DyreInternatApp.Models;
+﻿using DyreInternatApp.SharedModels.Models;
+using DyreInternatApp.SharedViewModels.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;

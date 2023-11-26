@@ -5,15 +5,15 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using DyreInternatApp.Models;
-using DyreInternatApp.Repositories;
+
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
-using DyreInternatApp.ViewModels;
+using DyreInternatApp.SharedViewModels.ViewModels;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
+using DyreInternatApp.DAL.Repositories;
+using DyreInternatApp.SharedModels.Models;
 
 namespace DyreInternatApp.Areas.Admin.Controllers { 
-
 
 
     [Area("Admin")]
@@ -34,7 +34,7 @@ namespace DyreInternatApp.Areas.Admin.Controllers {
         // GET: Animals
         public async Task<IActionResult> Index()
         {
-            List<Animal> allAnimals =  await _animalRepository.GetAll();
+            var allAnimals = await _animalRepository.GetAll().ToListAsync();
             if (allAnimals.Count == 0)
             {
                 return View();
@@ -79,7 +79,8 @@ namespace DyreInternatApp.Areas.Admin.Controllers {
         public async Task<IActionResult> Edit(int? id)
         {
 
-            var allAnimals = await _animalRepository.GetAll();
+            var allAnimals = await _animalRepository.GetAll().ToListAsync();
+
             if (id == null || allAnimals.Any() == false)
             {
                 return NotFound();
@@ -130,7 +131,8 @@ namespace DyreInternatApp.Areas.Admin.Controllers {
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var allAnimals = await _animalRepository.GetAll();
+            var allAnimals = await _animalRepository.GetAll().ToListAsync();
+
             if (allAnimals == null)
             {
                 return Problem("Entity set 'AppDbContext.Animals'  is null.");

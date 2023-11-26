@@ -1,26 +1,22 @@
-﻿using DyreInternatApp.Models;
-using DyreInternatApp.Repositories;
+﻿using DyreInternatApp.SharedModels.Models;
+using DyreInternatApp.BL.Services;
+using DyreInternatApp.SharedViewModels.ViewModels;
 using Microsoft.AspNetCore.Mvc;
-using AutoMapper;
-using DyreInternatApp.ViewModels;
 
 namespace DyreInternatApp.Controllers
 {
     public class AnimalController : Controller
     {
-        private readonly IAnimalRepository _animalRepository;
-        private readonly IMapper _mapper;
+        private readonly IAnimalService _animalService;
 
-        public AnimalController(IAnimalRepository  animalRepository, IMapper mapper)
+        public AnimalController(IAnimalService  animalService)
         {
-            _animalRepository = animalRepository;
-            _mapper = mapper;
+            _animalService = animalService;
         }
         public async Task<IActionResult> Index()
         {
-            List<Animal> allAnimals = await _animalRepository.GetAll();
-            var allAnimalsVM = _mapper.Map<List<AnimalVM>>(allAnimals);
-            return View(allAnimalsVM);
+            var allAnimalsList = await _animalService.SimpleAnimalList();
+            return View(allAnimalsList);
         }
     }
 }

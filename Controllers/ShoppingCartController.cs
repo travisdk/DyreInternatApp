@@ -1,6 +1,6 @@
-﻿using DyreInternatApp.Models;
-using DyreInternatApp.Repositories;
-using DyreInternatApp.ViewModels;
+﻿using DyreInternatApp.SharedModels.Models;
+using DyreInternatApp.DAL.Repositories;
+using DyreInternatApp.SharedViewModels.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DyreInternatApp.Controllers

@@ -32,7 +32,6 @@
   <ItemGroup>
     <Folder Include="Areas\Admin\Data\" />
     <Folder Include="Areas\Admin\Models\" />
-    <Folder Include="Migrations\" />
     <Folder Include="wwwroot\img\animals\" />
     <Folder Include="wwwroot\img\resources\" />
   </ItemGroup>
@@ -40,6 +39,14 @@
   <ItemGroup>
     <None Include="compilerconfig.json" />
     <None Include="wwwroot\lib\jquery-validation\dist\messages_da.js" />
+  </ItemGroup>
+
+  <ItemGroup>
+  
+    <ProjectReference Include="..\DyreInternatBL\BL.csproj" />
+  
+    <ProjectReference Include="..\DyreInternatDAL\DAL.csproj" />
+
   </ItemGroup>
 
   <ItemGroup>

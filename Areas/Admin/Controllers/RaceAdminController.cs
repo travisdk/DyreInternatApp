@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
-using DyreInternatApp.Models;
-using DyreInternatApp.Repositories;
-using DyreInternatApp.ViewModels;
+using DyreInternatApp.SharedModels.Models;
+using DyreInternatApp.DAL.Repositories;
+using DyreInternatApp.SharedViewModels.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
