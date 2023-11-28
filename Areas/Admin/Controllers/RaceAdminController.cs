@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
+using DyreInternatApp.BL.Services;
 
 namespace DyreInternatApp.Areas.Admin.Controllers
 {
@@ -15,29 +16,24 @@ namespace DyreInternatApp.Areas.Admin.Controllers
     [Authorize]
     public class RaceAdminController : Controller
     {
-        private IRaceRepository _raceRepository;
-        private readonly ISpeciesRepository _speciesRepository;
+        private IRaceService _raceService;
+        private readonly ISpeciesService _speciesService;
         private readonly IMapper _mapper;
 
-        public RaceAdminController(IRaceRepository raceRepository, ISpeciesRepository speciesRepository, IMapper mapper)
+        public RaceAdminController(IRaceService raceService, ISpeciesService speciesService, IMapper mapper)
         {
-            _raceRepository = raceRepository;
-            _speciesRepository = speciesRepository;
+            _raceService = raceService;
+            _speciesService = speciesService;
             _mapper = mapper;
         }
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            var races = _raceRepository.GetAll();
+            var races = await _raceService.GetAllRaces();
             return View(races);
         }
-
-
         public async Task<IActionResult> Create()
-
         {
-            RaceVM raceVM = new RaceVM();
-            var selList = new SelectList(await _speciesRepository.GetAll(), "SpeciesId", "SpeciesName");
-            raceVM.SpeciesList = selList;
+            var raceVM = await _raceService.PrepareNewRace();
             return View(raceVM);
         }
 
@@ -48,38 +44,31 @@ namespace DyreInternatApp.Areas.Admin.Controllers
 
             if (ModelState.IsValid)
             {
-                var newRace = _mapper.Map<Race>(newRaceVM);
-                await _raceRepository.AddRace(newRace);
+                await _raceService.AddRace(newRaceVM);
                 return RedirectToAction("Index");
             }
-
-            var selList = new SelectList(await _speciesRepository.GetAll(), "SpeciesId", "SpeciesName", newRaceVM.SpeciesId);
+            // REFAC
+            var selList = new SelectList(await _speciesService.GetAllSpecies(), "SpeciesId", "SpeciesName", newRaceVM.SpeciesId);
             newRaceVM.SpeciesList = selList;
             return View(newRaceVM);
-
         }
 
         public async Task<IActionResult> Edit(int? id)
         {
-            var allRaces = await _raceRepository.GetAll();
+            var allRaces = await _raceService.GetAllRaces();
             if (id == null || allRaces.Any() == false)
             {
-
-
                 return NotFound();
             }
 
-            var race = await _raceRepository.GetRaceById(id);
-            if (race == null)
+            var raceVM = await _raceService.GetRaceById(id);
+            if (raceVM == null)
             {
                 return NotFound();
             }
-
-            var raceVM = _mapper.Map<RaceVM>(race);
-            var selList = new SelectList(await _speciesRepository.GetAll(), "SpeciesId", "SpeciesName");
+            // REFAC
+            var selList = new SelectList(await _speciesService.GetAllSpecies(), "SpeciesId", "SpeciesName");
             raceVM.SpeciesList = selList;
-
-
             return View(raceVM);
         }
 
@@ -90,11 +79,12 @@ namespace DyreInternatApp.Areas.Admin.Controllers
 
             if (ModelState.IsValid)
             {
-                var race = _mapper.Map<Race>(raceVM);
-                await _raceRepository.Update(race);
+                await _raceService.UpdateRace(raceVM);
                 return RedirectToAction("Index");
             }
-            var selList = new SelectList(await _speciesRepository.GetAll(), "SpeciesId", "SpeciesName", raceVM.SpeciesId);
+
+            // REFAC
+            var selList = new SelectList(await _speciesService.GetAllSpecies(), "SpeciesId", "SpeciesName", raceVM.SpeciesId);
             raceVM.SpeciesList = selList;
             return View(raceVM);
 
@@ -102,21 +92,19 @@ namespace DyreInternatApp.Areas.Admin.Controllers
 
         public async Task<IActionResult> Delete(int? id)
         {
-            var race =  await _raceRepository.GetRaceById(id);
-            if (race == null)
+            var raceVM = _raceService.GetRaceById(id);
+            if (raceVM == null)
             {
                 return NotFound();
             }
-
-            return View(race);
+            return View(raceVM);
         }
-
 
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            await _raceRepository.RemoveById(id);
+            await _raceService.RemoveRaceById(id);
             return RedirectToAction(nameof(Index));
         }
     }

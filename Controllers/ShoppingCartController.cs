@@ -2,49 +2,43 @@
 using DyreInternatApp.DAL.Repositories;
 using DyreInternatApp.SharedViewModels.ViewModels;
 using Microsoft.AspNetCore.Mvc;
+using DyreInternatApp.BL.Services;
+
+using AutoMapper;
 
 namespace DyreInternatApp.Controllers
 {
     public class ShoppingCartController : Controller
     {
-        private readonly IAnimalRepository _animalRepository;
-        private readonly IShoppingCart _shoppingCart;
+        private readonly ICartService _shoppingCartService;
+        private readonly IMapper _mapper;
 
-        public ShoppingCartController(IAnimalRepository animalRepository, IShoppingCart shoppingCart)
+        public ShoppingCartController(ICartService shoppingCartService, IMapper mapper)
         {
-            _animalRepository = animalRepository;
-            _shoppingCart = shoppingCart;
+
+            _shoppingCartService = shoppingCartService;
+            _mapper = mapper;
         }
-        public IActionResult Index()
+        public async Task< IActionResult> Index()
         {
-            var items  = _shoppingCart.GetShoppingCartItems();
-            _shoppingCart.ShoppingCartItems = items;
-            ShoppingCartViewModel scVM = new ShoppingCartViewModel(_shoppingCart, _shoppingCart.GetShoppingCartTotal());
+            var shoppingCartViewModel  = await _shoppingCartService.GetShoppingCart();
+
                       
-            return View(scVM);
+            return View(shoppingCartViewModel);
         }
 
         public async Task<RedirectToActionResult> AddToShoppingCart(int animalId)
         {
-            var selectedAnimal = await _animalRepository.GetAnimalById(animalId);
-            if (selectedAnimal != null)
-            {
-                _shoppingCart.AddToCart(selectedAnimal);
 
-            }
+             await _shoppingCartService.AddToCart(animalId);
 
-           return RedirectToAction("Index");
+            return RedirectToAction("Index");
         }
         public async Task<RedirectToActionResult> RemoveFromShoppingCart(int animalId)
         {
-            var selectedAnimal = await _animalRepository.GetAnimalById(animalId);
-            if (selectedAnimal!=null)
-            {
-                _shoppingCart.RemoveFromCart(selectedAnimal);
-            }
-
+            await _shoppingCartService.RemoveFromCart(animalId);
             return RedirectToAction("Index");
 
         }
-    }                                                                       
+    }
 }

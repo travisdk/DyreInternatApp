@@ -15,8 +15,8 @@ namespace DyreInternatApp.Controllers
         }
         public async Task<IActionResult> Index()
         {
-            var allAnimalsList = await _animalService.SimpleAnimalList();
-            return View(allAnimalsList);
+           
+            return View(await _animalService.GetAllAnimals());    
         }
     }
 }

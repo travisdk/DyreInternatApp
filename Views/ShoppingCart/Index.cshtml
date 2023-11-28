@@ -6,13 +6,13 @@
 
 <div class="row g-3">
     <div class="col-8">
-            @if (Model.ShoppingCart.ShoppingCartItems.Count() == 0)
+            @if (Model.ShoppingCartItems.Count() == 0)
             {
                 <div class="alert alert-warning"><h4>Din kurv er tom!</h4></div>
             }
             else
             {
-                foreach (var shoppingCartItem in Model.ShoppingCart.ShoppingCartItems)
+                foreach (var shoppingCartItem in Model.ShoppingCartItems)
                 {
                     <partial name="_AnimalCardForCart" model="shoppingCartItem.Animal" />
                 }

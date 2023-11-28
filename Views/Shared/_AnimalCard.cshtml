@@ -12,7 +12,6 @@
             <p class="card-text">@Model.Notes</p>
             <p class="text-black-75">Pris: DKK @Model.Price inkl.moms</p>
             <p class="text-black-50">Vaccineret: @Html.DisplayFor(model => Model.IsVaccinated)</p>
-           
         </div>
         <div class="card-footer bg-primary-200">
             <a class="btn btn-success" asp-controller="ShoppingCart" asp-action="AddToShoppingCart" asp-route-animalid="@Model.AnimalId">Tilføj</a>

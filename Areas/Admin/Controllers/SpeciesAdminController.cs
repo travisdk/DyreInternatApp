@@ -2,6 +2,7 @@
 using DyreInternatApp.DAL.Repositories;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using DyreInternatApp.BL.Services;
 
 namespace DyreInternatApp.Areas.Admin.Controllers
 {
@@ -10,18 +11,16 @@ namespace DyreInternatApp.Areas.Admin.Controllers
     [Authorize]
     public class SpeciesAdminController : Controller
     {
-        private ISpeciesRepository _speciesRepository;
-        public SpeciesAdminController(ISpeciesRepository speciesRepository)
+        private ISpeciesService _speciesService;
+        public SpeciesAdminController(ISpeciesService speciesService)
         {
-            _speciesRepository = speciesRepository;
+            _speciesService = speciesService;
         }
-        public async Task< IActionResult> Index()
+        public async Task<IActionResult> Index()
         {
-            var species = await _speciesRepository.GetAll();
+            var species = await _speciesService.GetAllSpecies();
             return View(species);
         }
-
-
         public IActionResult Create()
         {
             return View();
@@ -29,16 +28,16 @@ namespace DyreInternatApp.Areas.Admin.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("SpeciesId, SpeciesName")] Species newSpecies)
+        public async Task<IActionResult> Create([Bind("SpeciesId, SpeciesName")] SpeciesVM newSpeciesVM)
         {
 
             if (ModelState.IsValid)
             {
-                await _speciesRepository.AddSpecies(newSpecies);
+                await _speciesService.AddSpecies(newSpeciesVM);
                 return RedirectToAction("Index");
             }
 
-            return View(newSpecies);
+            return View(newSpeciesVM);
 
         }
     }

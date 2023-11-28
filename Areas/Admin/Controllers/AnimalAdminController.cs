@@ -12,55 +12,49 @@ using DyreInternatApp.SharedViewModels.ViewModels;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using DyreInternatApp.DAL.Repositories;
 using DyreInternatApp.SharedModels.Models;
+using DyreInternatApp.BL.Services;
 
 namespace DyreInternatApp.Areas.Admin.Controllers { 
-
 
     [Area("Admin")]
     [Authorize]
     public class AnimalAdminController : Controller
     {
-        private readonly IAnimalRepository _animalRepository;
-        private readonly IRaceRepository _raceRepository;
+        private readonly IAnimalService _animalService;
+        private readonly IRaceService _raceService;
         private readonly IMapper _mapper;
 
-        public AnimalAdminController(IAnimalRepository animalRepository, IRaceRepository raceRepository, IMapper mapper)
+        public AnimalAdminController(IAnimalService animalService, IRaceService raceService, IMapper mapper)
         {
-            _animalRepository = animalRepository;
-            _raceRepository = raceRepository;
+            _animalService = animalService;
+            _raceService = raceService;
             _mapper = mapper;
         }
 
-        // GET: Animals
         public async Task<IActionResult> Index()
         {
-            var allAnimals = await _animalRepository.GetAll().ToListAsync();
-            if (allAnimals.Count == 0)
-            {
-                return View();
-            }
-            var animalsVM = _mapper.Map<List<AnimalVM>>(allAnimals);
-            return View(animalsVM);
+            return View(await _animalService.GetAllAnimals());
         }
 
-        // GET: Animals/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            var animal = await _animalRepository.GetAnimalById(id);
-            if (animal == null)
+            var animalVM = await _animalService.GetAnimalById(id);
+            if (animalVM == null)
             {
                 return NotFound();
             }
-            return View(animal);
+            return View(animalVM);
         }
 
         public async Task<IActionResult> Create()
         {
             AnimalVM animalVM = new AnimalVM();
-            animalVM.RaceList = await GetRacesSelectList();
+
+            // REFACTOR THIS MAYBE ?? - SEVERAL PLACES
+            animalVM.RaceList = await _raceService.GetRacesSelectList();
+
             return View(animalVM);
         }
-
 
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -68,36 +62,32 @@ namespace DyreInternatApp.Areas.Admin.Controllers {
         {
             if (ModelState.IsValid)
             {
-                var animal = _mapper.Map<Animal>(animalVM);
-                await _animalRepository.AddAnimal(animal, animalVM.ImageFile);
+               
+                await _animalService.AddAnimal(animalVM);
                 return RedirectToAction(nameof(Index));
             }
+            animalVM.RaceList = await _raceService.GetRacesSelectList();
+
             return View(animalVM);
         }
 
-        // GET: Animals/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-
-            var allAnimals = await _animalRepository.GetAll().ToListAsync();
+            var allAnimals = await _animalService.GetAllAnimals();
 
             if (id == null || allAnimals.Any() == false)
             {
                 return NotFound();
             }
-            var animal =  await _animalRepository.GetAnimalById(id);
-            if (animal == null)
+            var animalVM =  await _animalService.GetAnimalById(id);
+            if (animalVM == null)
             {
                 return NotFound();
             }
-        
-            var animalVM = _mapper.Map<AnimalVM>(animal);
-            animalVM.RaceList = await GetRacesSelectList();
+            animalVM.RaceList = await _raceService.GetRacesSelectList(); 
             return View(animalVM);
         }
 
-
- 
         [HttpPost]
         [ValidateAntiForgeryToken]
 
@@ -106,52 +96,38 @@ namespace DyreInternatApp.Areas.Admin.Controllers {
         {
             if (ModelState.IsValid)
             {
-                var animal = _mapper.Map<Animal>(animalVM);
-                await _animalRepository.UpdateAnimal(animal, animalVM.ImageFile);
+                await _animalService.UpdateAnimal(animalVM);
                 return RedirectToAction("Index");
             }
-            animalVM.RaceList = await GetRacesSelectList();
+            animalVM.RaceList = await _raceService.GetRacesSelectList();  // TODO => Servicen
             return View(animalVM);
         }
 
-        // GET: Animals/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            var animal = await _animalRepository.GetAnimalById(id);
-            if (animal == null)
+            var animalVM = await _animalService.GetAnimalById(id);
+            if (animalVM == null)
             {
                 return NotFound();
             }
-
-            return View(animal);
+            return View(animalVM);
         }
 
-        // POST: Animals/Delete/5
+
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var allAnimals = await _animalRepository.GetAll().ToListAsync();
+            var allAnimals = await _animalService.GetAllAnimals();
 
             if (allAnimals == null)
             {
                 return Problem("Entity set 'AppDbContext.Animals'  is null.");
             }
 
-            await _animalRepository.RemoveById(id);
+            await _animalService.RemoveAnimalById(id);
             return RedirectToAction(nameof(Index));
         }
-        private async Task<SelectList> GetRacesSelectList()
-        {
-            var allRaces = await _raceRepository.GetAll();
-            var allAnimalTypes = allRaces.Select(s => new
-            {
-                s.RaceId,
-                Description = $"{s.Species.SpeciesName} / {s.RaceName}"
-            });
-
-            var selList = new SelectList(allAnimalTypes, "RaceId", "Description");
-            return selList;
-        }
+        
     }
 }
