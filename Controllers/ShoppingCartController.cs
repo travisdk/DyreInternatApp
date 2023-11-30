@@ -15,23 +15,16 @@ namespace DyreInternatApp.Controllers
 
         public ShoppingCartController(ICartService shoppingCartService, IMapper mapper)
         {
-
             _shoppingCartService = shoppingCartService;
             _mapper = mapper;
         }
         public async Task< IActionResult> Index()
         {
-            var shoppingCartViewModel  = await _shoppingCartService.GetShoppingCart();
-
-                      
-            return View(shoppingCartViewModel);
+            return View(await _shoppingCartService.GetShoppingCart());
         }
-
         public async Task<RedirectToActionResult> AddToShoppingCart(int animalId)
         {
-
-             await _shoppingCartService.AddToCart(animalId);
-
+            await _shoppingCartService.AddToCart(animalId);
             return RedirectToAction("Index");
         }
         public async Task<RedirectToActionResult> RemoveFromShoppingCart(int animalId)
