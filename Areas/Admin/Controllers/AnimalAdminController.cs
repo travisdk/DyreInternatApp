@@ -1,18 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
-
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
-using DyreInternatApp.SharedViewModels.ViewModels;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
-using DyreInternatApp.DAL.Repositories;
-using DyreInternatApp.SharedModels.Models;
 using DyreInternatApp.BL.Services;
+using DyreInternatApp.ViewModels;
+using DyreInternatApp.Domain.Models;
+
 
 namespace DyreInternatApp.Areas.Admin.Controllers { 
 
@@ -38,7 +31,9 @@ namespace DyreInternatApp.Areas.Admin.Controllers {
 
         public async Task<IActionResult> Details(int? id)
         {
-            var animalVM = await _animalService.GetAnimalById(id);
+            var animal = await _animalService.GetAnimalById(id);
+            var animalVM = _mapper.Map<AnimalVM>(animal);
+
             if (animalVM == null)
             {
                 return NotFound();
@@ -62,8 +57,8 @@ namespace DyreInternatApp.Areas.Admin.Controllers {
         {
             if (ModelState.IsValid)
             {
-               
-                await _animalService.AddAnimal(animalVM);
+                var animal = _mapper.Map<Animal>(animalVM);
+                await _animalService.AddAnimal(animal, animalVM.ImageFile);
                 return RedirectToAction(nameof(Index));
             }
             animalVM.RaceList = await _raceService.GetRacesSelectList();
@@ -79,7 +74,9 @@ namespace DyreInternatApp.Areas.Admin.Controllers {
             {
                 return NotFound();
             }
-            var animalVM =  await _animalService.GetAnimalById(id);
+            var animal =  await _animalService.GetAnimalById(id);
+            var animalVM = _mapper.Map<AnimalVM>(animal);
+
             if (animalVM == null)
             {
                 return NotFound();
@@ -96,7 +93,8 @@ namespace DyreInternatApp.Areas.Admin.Controllers {
         {
             if (ModelState.IsValid)
             {
-                await _animalService.UpdateAnimal(animalVM);
+                var animal = _mapper.Map<Animal>(animalVM);
+                await _animalService.UpdateAnimal(animal,  animalVM.ImageFile);
                 return RedirectToAction("Index");
             }
             animalVM.RaceList = await _raceService.GetRacesSelectList();  // TODO => Servicen
@@ -105,11 +103,12 @@ namespace DyreInternatApp.Areas.Admin.Controllers {
 
         public async Task<IActionResult> Delete(int? id)
         {
-            var animalVM = await _animalService.GetAnimalById(id);
-            if (animalVM == null)
+            var animal = await _animalService.GetAnimalById(id);
+            if (animal == null)
             {
                 return NotFound();
             }
+            var animalVM = _mapper.Map<AnimalVM>(animal);
             return View(animalVM);
         }
 

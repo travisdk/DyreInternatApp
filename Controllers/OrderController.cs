@@ -1,6 +1,7 @@
 ﻿using DyreInternatApp.BL.Services;
-using DyreInternatApp.SharedModels.Models;
-using DyreInternatApp.SharedViewModels.ViewModels;
+
+using DyreInternatApp.Domain.Models;
+using DyreInternatApp.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -23,8 +24,8 @@ namespace DyreInternatApp.Controllers
         {
      
 
-            var cartVM =  await _cartService.GetShoppingCart();
-
+            var (items, _) =  await _cartService.GetShoppingCart();
+            // ?????
             var orderVM = new OrderVM();
             orderVM.CustomerId = _userManager.GetUserId(User);
 
@@ -38,7 +39,7 @@ namespace DyreInternatApp.Controllers
         {
             if (ModelState.IsValid)
             {
-                _orderService.Add(newOrder);
+                //_orderService.Add(newOrder);
 
             }
 

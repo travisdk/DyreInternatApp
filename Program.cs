@@ -1,12 +1,10 @@
-using DyreInternatApp.SharedModels.Models;
-using DyreInternatApp.DAL.Repositories;
+using DyreInternatApp.Domain.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
-using System.Globalization;
-using Microsoft.AspNetCore.Localization;
-using Microsoft.AspNetCore.Routing.Template;
 using DyreInternatApp.BL.Services;
 using System.Text.Json.Serialization;
+
+using DyreInternatApp.DAL.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -19,6 +17,7 @@ builder.Services.AddScoped<ICartRepository, CartRepository>(serviceProvider => C
 builder.Services.AddScoped<ISpeciesRepository, SpeciesRepository>();
 builder.Services.AddScoped<IRaceRepository, RaceRepository>();
 builder.Services.AddScoped<IAnimalRepository, AnimalRepository>();
+
 builder.Services.AddSession();
 builder.Services.AddHttpContextAccessor();
 

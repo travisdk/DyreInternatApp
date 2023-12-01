@@ -1,14 +1,11 @@
 ﻿using AutoMapper;
-using DyreInternatApp.SharedModels.Models;
-using DyreInternatApp.DAL.Repositories;
-using DyreInternatApp.SharedViewModels.ViewModels;
+using DyreInternatApp.BL.Services;
+using DyreInternatApp.Domain.Models;
+using DyreInternatApp.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
-using Microsoft.EntityFrameworkCore;
-using System.Diagnostics;
-using DyreInternatApp.BL.Services;
+
 
 namespace DyreInternatApp.Areas.Admin.Controllers
 {
@@ -33,8 +30,7 @@ namespace DyreInternatApp.Areas.Admin.Controllers
         }
         public async Task<IActionResult> Create()
         {
-            var raceVM = await _raceService.PrepareNewRace();
-            return View(raceVM);
+            return View();
         }
 
         [HttpPost]
@@ -44,7 +40,8 @@ namespace DyreInternatApp.Areas.Admin.Controllers
 
             if (ModelState.IsValid)
             {
-                await _raceService.AddRace(newRaceVM);
+                var newRace = _mapper.Map<Race>(newRaceVM);
+                await _raceService.AddRace(newRace);
                 return RedirectToAction("Index");
             }
             // REFAC
@@ -61,8 +58,9 @@ namespace DyreInternatApp.Areas.Admin.Controllers
                 return NotFound();
             }
 
-            var raceVM = await _raceService.GetRaceById(id);
-            if (raceVM == null)
+            var race = await _raceService.GetRaceById(id);
+            var raceVM = _mapper.Map<RaceVM>(race); 
+            if (race  == null)
             {
                 return NotFound();
             }
@@ -79,7 +77,8 @@ namespace DyreInternatApp.Areas.Admin.Controllers
 
             if (ModelState.IsValid)
             {
-                await _raceService.UpdateRace(raceVM);
+                var race = _mapper.Map<Race>(raceVM);
+                await _raceService.UpdateRace(race);
                 return RedirectToAction("Index");
             }
 
@@ -92,11 +91,12 @@ namespace DyreInternatApp.Areas.Admin.Controllers
 
         public async Task<IActionResult> Delete(int? id)
         {
-            var raceVM = _raceService.GetRaceById(id);
-            if (raceVM == null)
+            var race = _raceService.GetRaceById(id);
+            if (race == null)
             {
                 return NotFound();
             }
+            var raceVM = _mapper.Map<RaceVM>(race);
             return View(raceVM);
         }
 

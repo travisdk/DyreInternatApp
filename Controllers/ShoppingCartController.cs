@@ -1,10 +1,9 @@
-﻿using DyreInternatApp.SharedModels.Models;
-using DyreInternatApp.DAL.Repositories;
-using DyreInternatApp.SharedViewModels.ViewModels;
-using Microsoft.AspNetCore.Mvc;
-using DyreInternatApp.BL.Services;
-
+﻿using Microsoft.AspNetCore.Mvc;
 using AutoMapper;
+using DyreInternatApp.BL.Services;
+using Microsoft.AspNetCore.Http.Features;
+using DyreInternatApp.ViewModels;
+
 
 namespace DyreInternatApp.Controllers
 {
@@ -20,7 +19,9 @@ namespace DyreInternatApp.Controllers
         }
         public async Task< IActionResult> Index()
         {
-            return View(await _shoppingCartService.GetShoppingCart());
+            var (items, total) = await _shoppingCartService.GetShoppingCart();
+
+            return View(new ShoppingCartViewModel(items, total));   
         }
         public async Task<RedirectToActionResult> AddToShoppingCart(int animalId)
         {

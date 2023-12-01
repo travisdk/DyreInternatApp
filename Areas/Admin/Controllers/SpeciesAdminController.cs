@@ -1,8 +1,12 @@
-﻿using DyreInternatApp.SharedModels.Models;
-using DyreInternatApp.DAL.Repositories;
+﻿
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+
+using DyreInternatApp.ViewModels;
 using DyreInternatApp.BL.Services;
+using AutoMapper;
+using DyreInternatApp.Domain.Models;
+
 
 namespace DyreInternatApp.Areas.Admin.Controllers
 {
@@ -11,10 +15,13 @@ namespace DyreInternatApp.Areas.Admin.Controllers
     [Authorize]
     public class SpeciesAdminController : Controller
     {
-        private ISpeciesService _speciesService;
-        public SpeciesAdminController(ISpeciesService speciesService)
+        private readonly ISpeciesService _speciesService;
+        private readonly IMapper _mapper;
+
+        public SpeciesAdminController(ISpeciesService speciesService, IMapper mapper)
         {
             _speciesService = speciesService;
+            _mapper = mapper;
         }
         public async Task<IActionResult> Index()
         {
@@ -30,10 +37,10 @@ namespace DyreInternatApp.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("SpeciesId, SpeciesName")] SpeciesVM newSpeciesVM)
         {
-
             if (ModelState.IsValid)
             {
-                await _speciesService.AddSpecies(newSpeciesVM);
+                var newSpecies = _mapper.Map<Species>(newSpeciesVM);
+                await _speciesService.AddSpecies(newSpecies);
                 return RedirectToAction("Index");
             }
 

@@ -9,9 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DAL", "..\DyreInternatDAL\D
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BL", "..\DyreInternatBL\BL.csproj", "{E526227B-FED5-4715-9EF7-CF53DC184904}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SHARED_MODELS", "..\DyreInternatAppSharedModels\SHARED_MODELS.csproj", "{AB34F2C7-C6C5-4B29-BC84-F8934374DD56}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SHARED_VIEWMODELS", "..\DyreInternatAppSharedViewModels\SHARED_VIEWMODELS.csproj", "{6A5FCB33-724E-4B8A-8C56-C954231B72C5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DOMAIN", "..\DyreInternatAppSharedModels\DOMAIN.csproj", "{AB34F2C7-C6C5-4B29-BC84-F8934374DD56}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -35,10 +33,6 @@ Global
 		{AB34F2C7-C6C5-4B29-BC84-F8934374DD56}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AB34F2C7-C6C5-4B29-BC84-F8934374DD56}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AB34F2C7-C6C5-4B29-BC84-F8934374DD56}.Release|Any CPU.Build.0 = Release|Any CPU
-		{6A5FCB33-724E-4B8A-8C56-C954231B72C5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{6A5FCB33-724E-4B8A-8C56-C954231B72C5}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{6A5FCB33-724E-4B8A-8C56-C954231B72C5}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{6A5FCB33-724E-4B8A-8C56-C954231B72C5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

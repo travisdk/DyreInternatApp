@@ -1,5 +1,5 @@
-﻿using DyreInternatApp.SharedModels.Models;
-using DyreInternatApp.SharedViewModels.ViewModels;
+﻿using DyreInternatApp.Domain.Models;
+using DyreInternatApp.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
